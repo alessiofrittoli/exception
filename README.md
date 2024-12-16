@@ -1,6 +1,6 @@
 # Exception 🚦
 
-Version 0.1.0
+Version 1.0.0
 
 ## Handle errors with ease
 
@@ -9,6 +9,10 @@ This documentation describes the `Exception` class, which provides a structured 
 ### Table of Contents
 
 - [Getting started](#getting-started)
+- [API Reference](#api-reference)
+	- [ExceptionOptions Interface](#exceptionoptions-interface)
+	- [Exception Class](#exception-class)
+	- [Usage Scenarios](#usage-scenarios)
 - [Development](#development)
 	- [ESLint](#eslint)
 	- [Jest](#jest)
@@ -38,11 +42,13 @@ pnpm i @alessiofrittoli/exception
 
 ---
 
-### `ExceptionOptions` Interface
+### API Reference
+
+#### `ExceptionOptions` Interface
 
 The `ExceptionOptions` interface defines the optional parameters for the `Exception` class constructor.
 
-#### Properties
+##### Properties
 
 | Property | Type     | Default     | Description                                                      |
 |----------|----------|-------------|------------------------------------------------------------------|
@@ -52,22 +58,22 @@ The `ExceptionOptions` interface defines the optional parameters for the `Except
 
 ---
 
-### `Exception` Class
+#### `Exception` Class
 
 The `Exception` class extends the `Error` object and implements the `ExceptionOptions` interface.
 
-#### Constructor
+##### Constructor
 
 The constructor initializes an `Exception` instance with a custom message and options.
 
-##### Parameters
+###### Parameters
 
 | Parameter | Type               | Description                                                     |
 |-----------|--------------------|-----------------------------------------------------------------|
 | `message` | `TMessage`         | (Required) The error message. Can be a string or a custom type. |
 | `options` | `ExceptionOptions` | (Required) An object containing the error options.              |
 
-##### Example
+###### Example
 
 ```ts
 import Exception from '@alessiofrittoli/exception'
@@ -82,9 +88,9 @@ try {
 }
 ```
 
-#### Static Methods
+##### Static Methods
 
-##### `isException`
+###### `isException`
 
 A utility method to check if an object is an instance of the `Exception` class.
 
@@ -103,22 +109,24 @@ try {
 }
 ```
 
-### Usage Scenarios
+---
 
-#### Custom Error Handling
+#### Usage Scenarios
+
+##### Custom Error Handling
 
 The `Exception` class is ideal for creating domain-specific errors with additional metadata, such as error codes and HTTP statuses.
 
-##### Example
+###### Example
 
 ```ts
 enum ErrorCode
 {
-	EMPTY_VALUE			= 'ERREMPTYVALUE',
-	WRONG_FORMAT		= 'ERRWRONGFORMAT',
-	EXPIRED				= 'ERREXPIRED',
-	TOO_EARLY			= 'ERRTOOEARLY',
-	NOT_ALLOWED			= 'ERRNOTALLOWED',
+	EMPTY_VALUE	= 'ERREMPTYVALUE',
+	WRONG_FORMAT= 'ERRWRONGFORMAT',
+	EXPIRED		= 'ERREXPIRED',
+	TOO_EARLY	= 'ERRTOOEARLY',
+	NOT_ALLOWED	= 'ERRNOTALLOWED',
 }
 
 try {
