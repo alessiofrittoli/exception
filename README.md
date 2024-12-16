@@ -4,6 +4,8 @@ Version 0.1.0
 
 ## Handle errors with ease
 
+This documentation describes the `Exception` class, which provides a structured way to handle errors in TypeScript. It includes custom properties such as `code`, `name`, and `status` for more detailed error reporting and debugging.
+
 ### Table of Contents
 
 - [Getting started](#getting-started)
@@ -15,6 +17,10 @@ Version 0.1.0
 - [Credits](#made-with-)
 
 ---
+
+### Overview
+
+The `Exception` class extends the native JavaScript `Error` object, adding customizable fields to improve error classification and handling. It also includes a static utility method to check if an object is an instance of the `Exception` class.
 
 ### Getting started
 
@@ -28,6 +34,101 @@ or using `pnpm`
 
 ```bash
 pnpm i @alessiofrittoli/exception
+```
+
+---
+
+### `ExceptionOptions` Interface
+
+The `ExceptionOptions` interface defines the optional parameters for the `Exception` class constructor.
+
+#### Properties
+
+| Property | Type     | Default     | Description                                                      |
+|----------|----------|-------------|------------------------------------------------------------------|
+| `code`   | `TCode`  | -           | (Required) A numeric or custom code representing the error type. |
+| `name`   | `string` | `Exception` | (Optional) A string representing the error name.                 |
+| `status` | `number` | -           | (Optional) An HTTP status code associated with the error.        |
+
+---
+
+### `Exception` Class
+
+The `Exception` class extends the `Error` object and implements the `ExceptionOptions` interface.
+
+#### Constructor
+
+The constructor initializes an `Exception` instance with a custom message and options.
+
+##### Parameters
+
+| Parameter | Type               | Description                                                     |
+|-----------|--------------------|-----------------------------------------------------------------|
+| `message` | `TMessage`         | (Required) The error message. Can be a string or a custom type. |
+| `options` | `ExceptionOptions` | (Required) An object containing the error options.              |
+
+##### Example
+
+```ts
+import Exception from '@alessiofrittoli/exception'
+
+try {
+	throw new Exception( 'Resource not found', {
+		code	: 'ERRNOTFOUND',
+		status	: 404,
+	} )
+} catch ( error ) {
+	console.error( error )
+}
+```
+
+#### Static Methods
+
+##### `isException`
+
+A utility method to check if an object is an instance of the `Exception` class.
+
+###### Example
+
+```ts
+try {
+	throw new Exception( 'Something went wrong', { code: 'ERRUNKNOWN' } )
+} catch ( error ) {
+	if ( Exception.isException( error ) ) {
+		// we can safely access `Exception` properties
+		console.error( `Error [${ error.code }]: ${ error.message }` )
+	} else {
+		console.error( error )
+	}
+}
+```
+
+### Usage Scenarios
+
+#### Custom Error Handling
+
+The `Exception` class is ideal for creating domain-specific errors with additional metadata, such as error codes and HTTP statuses.
+
+##### Example
+
+```ts
+enum ErrorCode
+{
+	EMPTY_VALUE			= 'ERREMPTYVALUE',
+	WRONG_FORMAT		= 'ERRWRONGFORMAT',
+	EXPIRED				= 'ERREXPIRED',
+	TOO_EARLY			= 'ERRTOOEARLY',
+	NOT_ALLOWED			= 'ERRNOTALLOWED',
+}
+
+try {
+	await fetch( ... )
+} catch ( error ) {
+	// error thrown by the server: Exception( 'Wrong value.', { code: ErrorCode.WRONG_FORMAT, status: 422 } )
+	if ( Exception.isException<string, ErrorCode>( error ) ) {
+		console.log( error.code ) // `error.code` is type of `ErrorCode`.
+	}
+}
 ```
 
 ---
