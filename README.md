@@ -80,7 +80,7 @@ import Exception from '@alessiofrittoli/exception'
 
 try {
 	throw new Exception( 'Resource not found', {
-		code	: 'ERRNOTFOUND',
+		code	: 'ERR:NOTFOUND',
 		status	: 404,
 	} )
 } catch ( error ) {
@@ -94,11 +94,13 @@ try {
 
 A utility method to check if an object is an instance of the `Exception` class.
 
+It supports also a JSON representation of the `Exception` class (commonly returned by server responses).
+
 ###### Example
 
 ```ts
 try {
-	throw new Exception( 'Something went wrong', { code: 'ERRUNKNOWN' } )
+	throw new Exception( 'Something went wrong', { code: 'ERR:UNKNOWN' } )
 } catch ( error ) {
 	if ( Exception.isException( error ) ) {
 		// we can safely access `Exception` properties
@@ -107,6 +109,18 @@ try {
 		console.error( error )
 	}
 }
+```
+
+```ts
+/** Simulates JSON Exception returned by a server JSON Response. */
+const error = (
+	JSON.parse( JSON.stringify( new Exception( 'Exception with custom name.', {
+		code: 0,
+		name: 'AbortError',
+	} ) ) )
+)
+
+console.log( Exception.isException( error ) ) // Outputs: true
 ```
 
 ---
@@ -120,24 +134,120 @@ The `Exception` class is ideal for creating domain-specific errors with addition
 ###### Example
 
 ```ts
-enum ErrorCode
-{
-	EMPTY_VALUE	= 'ERREMPTYVALUE',
-	WRONG_FORMAT= 'ERRWRONGFORMAT',
-	EXPIRED		= 'ERREXPIRED',
-	TOO_EARLY	= 'ERRTOOEARLY',
-	NOT_ALLOWED	= 'ERRNOTALLOWED',
-}
-
 try {
 	await fetch( ... )
 } catch ( error ) {
-	// error thrown by the server: Exception( 'Wrong value.', { code: ErrorCode.WRONG_FORMAT, status: 422 } )
-	if ( Exception.isException<string, ErrorCode>( error ) ) {
+	// error thrown by the server: Exception( 'Wrong value.', { code: ErrorCode.WRONG_VALUE, status: 422 } )
+	if ( Exception.isException( error ) ) {
 		console.log( error.code ) // `error.code` is type of `ErrorCode`.
 	}
 }
 ```
+
+---
+
+#### `ErrorCode` enum
+
+The `ErrorCode` enum is a utility that provides pre-defined constants for the most common error codes.\
+It is designed to simplify error handling and improve feedback quality returned to the user.
+
+<details>
+
+<summary>Constants Overview</summary>
+
+| Constant      | Value            | Description                                             |
+|---------------|------------------|---------------------------------------------------------|
+| `UNKNOWN`     | `ERR:UNKNOWN`    | Returned when an unexpected error occured.              |
+| `ABORT`       | `ERR:ABORT`      | Returned when user abort the request.                   |
+| `EMPTY_VALUE` | `ERR:EMPTYVALUE` | Returned when a required value is "falsy".              |
+| `WRONG_VALUE` | `ERR:WRONGVALUE` | Return when a required value is not the expected value. |
+| `EXPIRED`     | `ERR:EXPIRED`    | Returned when a requested has been performed too late.  |
+| `TOO_EARLY`   | `ERR:TOOEARLY`   | Returned when a request has been performed too early.   |
+
+</details>
+
+---
+
+<details>
+
+<summary>Extending the `enum` in your project</summary>
+
+For obvious reasons the default `ErrorCode` provided by this library might be not enough to cover all the error cases in your project.
+
+To fill this gap, you can "extend" the `ErrorCode` enum by doing so:
+
+```ts
+// myproject/src/error-code.ts
+import ExceptionCode from '@alessiofrittoli/exception/code'
+
+/** Your project custom `ErrorCode`. */
+export enum MyProjectErrorCode
+{
+	INVALID_SIGN = 'ERR:INVALIDSIGN',
+}
+
+const ErrorCode = { ExceptionCode, MyProjectErrorCode }
+type ErrorCode = MergedEnumValue<typeof ErrorCode>
+
+export default ErrorCode
+```
+
+⚠️ The Type `MergedEnumValue<T>` is globally delcared from `@alessiofrittoli/type-utils` so make sure to install it if needed.
+
+</details>
+
+---
+
+<details>
+
+<summary>Usage</summary>
+
+#### Using the default `ErrorCode` to throw a new `Exception`
+
+```ts
+import Exception from '@alessiofrittoli/exception'
+import ErrorCode from '@alessiofrittoli/exception/code'
+
+throw new Exception( 'Password is a required field to log you in.', {
+	code	: ErrorCode.EMPTY_VALUE,
+	status	: 422,
+} )
+```
+
+#### Using custom `ErrorCode` to throw a new `Exception`
+
+```ts
+import Exception from '@alessiofrittoli/exception'
+import ErrorCode from '@/error-code' // previously created in `myproject/src/error-code.ts`
+
+throw new Exception( 'Invalid signature.', {
+	code	: ErrorCode.MyProjectErrorCode.INVALID_SIGN,
+	status	: 403,
+} )
+```
+
+#### Using `ErrorCode` to handle errors
+
+```ts
+import ErrorCode from '@/error-code' // previously created in `myproject/src/error-code.ts`
+
+try {
+	...
+} catch ( error ) {
+	if ( Exception.isException<string, ErrorCode>( error ) ) {
+		switch ( error.code ) { // `error.code` is now type of `ErrorCode` (custom).
+			case ErrorCode.MyProjectErrorCode.INVALID_SIGN:
+				console.log( 'The signature is not valid.' )
+				break
+			case ErrorCode.ExceptionCode.UNKNOWN:
+			default:
+				console.log( 'Unexpected error occured.' )
+		}
+	}
+}
+```
+
+</details>
 
 ---
 
