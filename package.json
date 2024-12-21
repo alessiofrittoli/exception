@@ -27,6 +27,17 @@
 	"files": [
 		"dist"
 	],
+	"exports": {
+		".": {
+			"import": "./dist/index.mjs",
+			"require": "./dist/index.js"
+		},
+		"./code": {
+			"types": "./dist/code.d.ts",
+			"import": "./dist/code.mjs",
+			"require": "./dist/code.js"
+		}
+	},
 	"sideEffects": false,
 	"scripts": {
 		"build": "eslint && pnpm test:ci && tsup",
