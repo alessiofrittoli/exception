@@ -52,4 +52,17 @@ describe( 'Exception.isException()', () => {
 		}
 	} )
 
+
+	it( 'supports Exception JSON object', () => {
+		const error = (
+			JSON.parse( JSON.stringify( new Exception( 'Exception with custom name.', {
+				code: 0,
+				name: 'AbortError',
+			} ) ) )
+		)
+
+		expect( Exception.isException( error ) )
+			.toBe( true )
+	} )
+
 } )
