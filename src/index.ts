@@ -1,4 +1,6 @@
-export interface ExceptionOptions<TCode = number> extends ErrorOptions
+import type ErrorCode from './code'
+
+export interface ExceptionOptions<TCode = ErrorCode> extends ErrorOptions
 {
 	code	: TCode
 	name?	: string
@@ -6,7 +8,7 @@ export interface ExceptionOptions<TCode = number> extends ErrorOptions
 }
 
 
-class Exception<TMessage = string, TCode = number> extends Error implements ExceptionOptions<TCode>
+class Exception<TMessage = string, TCode = ErrorCode> extends Error implements ExceptionOptions<TCode>
 {
 	// @ts-expect-error Type 'TMessage' is not assignable to type 'string'.ts(2416)
 	message: TMessage
@@ -29,7 +31,7 @@ class Exception<TMessage = string, TCode = number> extends Error implements Exce
 
 	
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	static isException<TMessage = string, TCode = number>( error: any ): error is Exception<TMessage, TCode>
+	static isException<TMessage = string, TCode = ErrorCode>( error: any ): error is Exception<TMessage, TCode>
 	{
 		return (
 			error instanceof Exception ||
