@@ -8,6 +8,9 @@ importers:
 
   .:
     devDependencies:
+      '@alessiofrittoli/node-scripts':
+        specifier: ^2.2.1
+        version: 2.2.1
       '@eslint/js':
         specifier: ^9.17.0
         version: 9.17.0
@@ -61,6 +64,9 @@ importers:
         version: 8.19.0(eslint@9.17.0)(typescript@5.7.2)
 
 packages:
+
+  '@alessiofrittoli/node-scripts@2.2.1':
+    resolution: {integrity: sha512-VP9pUyrPhudlv/1UOxb1BfisKOSAAl/0H8beM5Udn3ddMHPVbrP4ul1rLqDbHWsFzePmpOiOsvOpEAsj2YPnWA==}
 
   '@ampproject/remapping@2.3.0':
     resolution: {integrity: sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw==}
@@ -2414,6 +2420,8 @@ packages:
     engines: {node: '>=10'}
 
 snapshots:
+
+  '@alessiofrittoli/node-scripts@2.2.1': {}
 
   '@ampproject/remapping@2.3.0':
     dependencies:
