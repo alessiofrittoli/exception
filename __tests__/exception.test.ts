@@ -1,17 +1,13 @@
-import Exception from '@/index'
+import { Exception } from '@/index'
 
 describe( 'Exception', () => {
 
 	it( 'can be thrown', () => {
-		try {
+		expect( () => {
 			throw new Exception( 'Error message', {
 				code: 0,
 			} )
-		} catch ( error ) {			
-			if ( Exception.isException( error ) ) {
-				expect( error.name ).toBe( 'Exception' )
-			}
-		}
+		} ).toThrow( Exception )
 	} )
 
 

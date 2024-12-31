@@ -76,7 +76,7 @@ The constructor initializes an `Exception` instance with a custom message and op
 ###### Example
 
 ```ts
-import Exception from '@alessiofrittoli/exception'
+import { Exception } from '@alessiofrittoli/exception'
 
 try {
 	throw new Exception( 'Resource not found', {
@@ -178,7 +178,7 @@ To fill this gap, you can "extend" the `ErrorCode` enum by doing so:
 
 ```ts
 // myproject/src/error-code.ts
-import ExceptionCode from '@alessiofrittoli/exception/code'
+import { ExceptionCode } from '@alessiofrittoli/exception/code'
 
 /** Your project custom `ErrorCode`. */
 export enum MyProjectErrorCode
@@ -205,8 +205,8 @@ export default ErrorCode
 #### Using the default `ErrorCode` to throw a new `Exception`
 
 ```ts
-import Exception from '@alessiofrittoli/exception'
-import ErrorCode from '@alessiofrittoli/exception/code'
+import { Exception } from '@alessiofrittoli/exception'
+import { ErrorCode } from '@alessiofrittoli/exception/code'
 
 throw new Exception( 'Password is a required field to log you in.', {
 	code	: ErrorCode.EMPTY_VALUE,
@@ -217,8 +217,8 @@ throw new Exception( 'Password is a required field to log you in.', {
 #### Using custom `ErrorCode` to throw a new `Exception`
 
 ```ts
-import Exception from '@alessiofrittoli/exception'
-import ErrorCode from '@/error-code' // previously created in `myproject/src/error-code.ts`
+import { Exception } from '@alessiofrittoli/exception'
+import { ErrorCode } from '@/error-code' // previously created in `myproject/src/error-code.ts`
 
 throw new Exception( 'Invalid signature.', {
 	code	: ErrorCode.MyProjectErrorCode.INVALID_SIGN,
@@ -229,7 +229,7 @@ throw new Exception( 'Invalid signature.', {
 #### Using `ErrorCode` to handle errors
 
 ```ts
-import ErrorCode from '@/error-code' // previously created in `myproject/src/error-code.ts`
+import { ErrorCode } from '@/error-code' // previously created in `myproject/src/error-code.ts`
 
 try {
 	...

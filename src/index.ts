@@ -1,4 +1,4 @@
-import type ErrorCode from './code'
+import type { ErrorCode } from './code'
 
 export interface ExceptionOptions<TCode = ErrorCode> extends ErrorOptions
 {
@@ -8,7 +8,7 @@ export interface ExceptionOptions<TCode = ErrorCode> extends ErrorOptions
 }
 
 
-class Exception<TMessage = string, TCode = ErrorCode> extends Error implements ExceptionOptions<TCode>
+export class Exception<TMessage = string, TCode = ErrorCode> extends Error implements ExceptionOptions<TCode>
 {
 	// @ts-expect-error Type 'TMessage' is not assignable to type 'string'.ts(2416)
 	message: TMessage
@@ -39,6 +39,3 @@ class Exception<TMessage = string, TCode = ErrorCode> extends Error implements E
 		)
 	}
 }
-
-
-export default Exception
