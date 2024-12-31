@@ -2,7 +2,7 @@
  * Most common error codes.
  * 
  */
-enum ErrorCode
+export enum ErrorCode
 {
 	UNKNOWN		= 'ERR:UNKNOWN',
 	ABORT		= 'ERR:ABORT',
@@ -11,6 +11,3 @@ enum ErrorCode
 	EXPIRED		= 'ERR:EXPIRED',
 	TOO_EARLY	= 'ERR:TOOEARLY',
 }
-
-
-export default ErrorCode
