@@ -1,6 +1,6 @@
 # Exception 🚦
 
-Version 1.2.0
+Version 2.0.0
 
 [![Coverage Status](https://coveralls.io/repos/github/alessiofrittoli/exception/badge.svg)](https://coveralls.io/github/alessiofrittoli/exception) [![Dependencies](https://img.shields.io/librariesio/release/npm/%40alessiofrittoli%2Fexception)](https://libraries.io/npm/%40alessiofrittoli%2Fexception)
 
