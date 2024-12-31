@@ -2,6 +2,8 @@
 
 Version 1.2.0
 
+[![Coverage Status](https://coveralls.io/repos/github/alessiofrittoli/exception/badge.svg)](https://coveralls.io/github/alessiofrittoli/exception) [![Dependencies](https://img.shields.io/librariesio/release/npm/%40alessiofrittoli%2Fexception)](https://libraries.io/npm/%40alessiofrittoli%2Fexception)
+
 ## Handle errors with ease
 
 This documentation describes the `Exception` class, which provides a structured way to handle errors in TypeScript. It includes custom properties such as `code`, `name`, and `status` for more detailed error reporting and debugging.
