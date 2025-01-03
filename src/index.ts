@@ -1,4 +1,4 @@
-import type { ErrorCode } from './code'
+import { ErrorCode } from './code'
 
 /**
  * Interface representing the options for an Exception.
@@ -71,5 +71,20 @@ export class Exception<TMessage = string, TCode = ErrorCode> extends Error imple
 			error instanceof Exception ||
 			( typeof error === 'object' && 'typename' in error && error.typename === 'Exception' )
 		)
+	}
+
+
+	/**
+	 * Converts the instance to a JSON object.
+	 *
+	 * @returns A JSON representation of the instance, including the message property.
+	 */
+	toJSON()
+	{
+		return {
+			...this,
+			message: this.message,
+			cause: this.cause,
+		}
 	}
 }
