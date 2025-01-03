@@ -1,3 +1,4 @@
+import { ErrorCode } from '@/code'
 import { Exception } from '@/index'
 
 describe( 'Exception', () => {
@@ -59,6 +60,33 @@ describe( 'Exception.isException()', () => {
 
 		expect( Exception.isException( error ) )
 			.toBe( true )
+	} )
+
+} )
+
+
+describe( 'Exception.toJSON()', () => {
+
+	it( 'returns a JSON representation of the Exception Class', () => {
+		const exception = (
+			new Exception(
+				'Error message', {
+					code	: ErrorCode.ABORT,
+					status	: 400,
+					name	: 'AbortError',
+					cause	: 'User aborted the request.',
+				}
+			)
+		)
+
+		const parsedException = JSON.parse( JSON.stringify( exception ) ) as Exception
+
+		expect( Exception.isException( parsedException ) ).toBe( true )
+		expect( parsedException.message ).toBe( exception.message )
+		expect( parsedException.code ).toBe( exception.code )
+		expect( parsedException.name ).toBe( exception.name )
+		expect( parsedException.cause ).toBe( exception.cause )		
+
 	} )
 
 } )
