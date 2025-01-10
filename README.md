@@ -1,8 +1,14 @@
 # Exception 🚦
 
-Version 2.1.0
+[![NPM Latest Version][version-badge]][npm-url] [![Coverage Status][coverage-badge]][coverage-url] [![NPM Monthly Downloads][downloads-badge]][npm-url] [![Dependencies][deps-badge]][deps-url]
 
-[![Coverage Status](https://coveralls.io/repos/github/alessiofrittoli/exception/badge.svg)](https://coveralls.io/github/alessiofrittoli/exception) [![Dependencies](https://img.shields.io/librariesio/release/npm/%40alessiofrittoli%2Fexception)](https://libraries.io/npm/%40alessiofrittoli%2Fexception)
+[version-badge]: https://img.shields.io/npm/v/%40alessiofrittoli%2Fexception
+[npm-url]: https://npmjs.org/package/%40alessiofrittoli%2Fexception
+[coverage-badge]: https://coveralls.io/repos/github/alessiofrittoli/exception/badge.svg
+[coverage-url]: https://coveralls.io/github/alessiofrittoli/exception
+[downloads-badge]: https://img.shields.io/npm/dm/%40alessiofrittoli%2Fexception.svg
+[deps-badge]: https://img.shields.io/librariesio/release/npm/%40alessiofrittoli%2Fexception
+[deps-url]: https://libraries.io/npm/%40alessiofrittoli%2Fexception
 
 ## Handle errors with ease
 
@@ -12,12 +18,12 @@ This documentation describes the `Exception` class, which provides a structured 
 
 - [Getting started](#getting-started)
 - [API Reference](#api-reference)
-	- [ExceptionOptions Interface](#exceptionoptions-interface)
-	- [Exception Class](#exception-class)
-	- [Usage Scenarios](#usage-scenarios)
+    - [ExceptionOptions Interface](#exceptionoptions-interface)
+    - [Exception Class](#exception-class)
+    - [Usage Scenarios](#usage-scenarios)
 - [Development](#development)
-	- [ESLint](#eslint)
-	- [Jest](#jest)
+    - [ESLint](#eslint)
+    - [Jest](#jest)
 - [Contributing](#contributing)
 - [Security](#security)
 - [Credits](#made-with-)
@@ -81,12 +87,12 @@ The constructor initializes an `Exception` instance with a custom message and op
 import { Exception } from '@alessiofrittoli/exception'
 
 try {
-	throw new Exception( 'Resource not found', {
-		code	: 'ERR:NOTFOUND',
-		status	: 404,
-	} )
+    throw new Exception( 'Resource not found', {
+        code	: 'ERR:NOTFOUND',
+        status	: 404,
+    } )
 } catch ( error ) {
-	console.error( error )
+    console.error( error )
 }
 ```
 
@@ -102,24 +108,24 @@ It supports also a JSON representation of the `Exception` class (commonly return
 
 ```ts
 try {
-	throw new Exception( 'Something went wrong', { code: 'ERR:UNKNOWN' } )
+    throw new Exception( 'Something went wrong', { code: 'ERR:UNKNOWN' } )
 } catch ( error ) {
-	if ( Exception.isException( error ) ) {
-		// we can safely access `Exception` properties
-		console.error( `Error [${ error.code }]: ${ error.message }` )
-	} else {
-		console.error( error )
-	}
+    if ( Exception.isException( error ) ) {
+        // we can safely access `Exception` properties
+        console.error( `Error [${ error.code }]: ${ error.message }` )
+    } else {
+        console.error( error )
+    }
 }
 ```
 
 ```ts
 /** Simulates JSON Exception returned by a server JSON Response. */
 const error = (
-	JSON.parse( JSON.stringify( new Exception( 'Exception with custom name.', {
-		code: 0,
-		name: 'AbortError',
-	} ) ) )
+    JSON.parse( JSON.stringify( new Exception( 'Exception with custom name.', {
+        code: 0,
+        name: 'AbortError',
+    } ) ) )
 )
 
 console.log( Exception.isException( error ) ) // Outputs: true
@@ -137,12 +143,12 @@ The `Exception` class is ideal for creating domain-specific errors with addition
 
 ```ts
 try {
-	await fetch( ... )
+    await fetch( ... )
 } catch ( error ) {
-	// error thrown by the server: Exception( 'Wrong value.', { code: ErrorCode.WRONG_VALUE, status: 422 } )
-	if ( Exception.isException( error ) ) {
-		console.log( error.code ) // `error.code` is type of `ErrorCode`.
-	}
+    // error thrown by the server: Exception( 'Wrong value.', { code: ErrorCode.WRONG_VALUE, status: 422 } )
+    if ( Exception.isException( error ) ) {
+        console.log( error.code ) // `error.code` is type of `ErrorCode`.
+    }
 }
 ```
 
@@ -180,15 +186,15 @@ To fill this gap, you can "extend" the `ErrorCode` enum by doing so:
 
 ```ts
 // myproject/src/error-code.ts
-import { ExceptionCode } from '@alessiofrittoli/exception/code'
+import { ErrorCode as Exception } from '@alessiofrittoli/exception/code'
 
 /** Your project custom `ErrorCode`. */
 export enum MyProjectErrorCode
 {
-	INVALID_SIGN = 'ERR:INVALIDSIGN',
+    INVALID_SIGN = 'ERR:INVALIDSIGN',
 }
 
-const ErrorCode = { ExceptionCode, MyProjectErrorCode }
+const ErrorCode = { Exception, MyProjectErrorCode }
 type ErrorCode = MergedEnumValue<typeof ErrorCode>
 
 export default ErrorCode
@@ -211,8 +217,8 @@ import { Exception } from '@alessiofrittoli/exception'
 import { ErrorCode } from '@alessiofrittoli/exception/code'
 
 throw new Exception( 'Password is a required field to log you in.', {
-	code	: ErrorCode.EMPTY_VALUE,
-	status	: 422,
+    code	: ErrorCode.EMPTY_VALUE,
+    status	: 422,
 } )
 ```
 
@@ -223,8 +229,8 @@ import { Exception } from '@alessiofrittoli/exception'
 import { ErrorCode } from '@/error-code' // previously created in `myproject/src/error-code.ts`
 
 throw new Exception( 'Invalid signature.', {
-	code	: ErrorCode.MyProjectErrorCode.INVALID_SIGN,
-	status	: 403,
+    code	: ErrorCode.MyProjectErrorCode.INVALID_SIGN,
+    status	: 403,
 } )
 ```
 
@@ -234,18 +240,18 @@ throw new Exception( 'Invalid signature.', {
 import { ErrorCode } from '@/error-code' // previously created in `myproject/src/error-code.ts`
 
 try {
-	...
+    ...
 } catch ( error ) {
-	if ( Exception.isException<string, ErrorCode>( error ) ) {
-		switch ( error.code ) { // `error.code` is now type of `ErrorCode` (custom).
-			case ErrorCode.MyProjectErrorCode.INVALID_SIGN:
-				console.log( 'The signature is not valid.' )
-				break
-			case ErrorCode.ExceptionCode.UNKNOWN:
-			default:
-				console.log( 'Unexpected error occured.' )
-		}
-	}
+    if ( Exception.isException<string, ErrorCode>( error ) ) {
+        switch ( error.code ) { // `error.code` is now type of `ErrorCode` (custom).
+            case ErrorCode.MyProjectErrorCode.INVALID_SIGN:
+                console.log( 'The signature is not valid.' )
+                break
+            case ErrorCode.Exception.UNKNOWN:
+            default:
+                console.log( 'Unexpected error occured.' )
+        }
+    }
 }
 ```
 
@@ -334,30 +340,30 @@ If you believe you have found a security vulnerability, we encourage you to **_r
 ### Made with ☕
 
 <table style='display:flex;gap:20px;'>
-	<tbody>
-		<tr>
-			<td>
-				<img src='https://avatars.githubusercontent.com/u/35973186' style='width:60px;border-radius:50%;object-fit:contain;'>
-			</td>
-			<td>
-				<table style='display:flex;gap:2px;flex-direction:column;'>
-					<tbody>
-						<tr>
-							<td>
-								<a href='https://github.com/alessiofrittoli' target='_blank' rel='noopener'>Alessio Frittoli</a>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<small>
-									<a href='https://alessiofrittoli.it' target='_blank' rel='noopener'>https://alessiofrittoli.it</a> |
-									<a href='mailto:info@alessiofrittoli.it' target='_blank' rel='noopener'>info@alessiofrittoli.it</a>
-								</small>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</td>
-		</tr>
-	</tbody>
+    <tbody>
+        <tr>
+            <td>
+                <img src='https://avatars.githubusercontent.com/u/35973186' style='width:60px;border-radius:50%;object-fit:contain;'>
+            </td>
+            <td>
+                <table style='display:flex;gap:2px;flex-direction:column;'>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <a href='https://github.com/alessiofrittoli' target='_blank' rel='noopener'>Alessio Frittoli</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <small>
+                                    <a href='https://alessiofrittoli.it' target='_blank' rel='noopener'>https://alessiofrittoli.it</a> |
+                                    <a href='mailto:info@alessiofrittoli.it' target='_blank' rel='noopener'>info@alessiofrittoli.it</a>
+                                </small>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    </tbody>
 </table>
