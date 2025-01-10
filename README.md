@@ -180,7 +180,7 @@ To fill this gap, you can "extend" the `ErrorCode` enum by doing so:
 
 ```ts
 // myproject/src/error-code.ts
-import { ExceptionCode } from '@alessiofrittoli/exception/code'
+import { ErrorCode as Exception } from '@alessiofrittoli/exception/code'
 
 /** Your project custom `ErrorCode`. */
 export enum MyProjectErrorCode
@@ -188,7 +188,7 @@ export enum MyProjectErrorCode
 	INVALID_SIGN = 'ERR:INVALIDSIGN',
 }
 
-const ErrorCode = { ExceptionCode, MyProjectErrorCode }
+const ErrorCode = { Exception, MyProjectErrorCode }
 type ErrorCode = MergedEnumValue<typeof ErrorCode>
 
 export default ErrorCode
@@ -241,7 +241,7 @@ try {
 			case ErrorCode.MyProjectErrorCode.INVALID_SIGN:
 				console.log( 'The signature is not valid.' )
 				break
-			case ErrorCode.ExceptionCode.UNKNOWN:
+			case ErrorCode.Exception.UNKNOWN:
 			default:
 				console.log( 'Unexpected error occured.' )
 		}
