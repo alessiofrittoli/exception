@@ -1,8 +1,14 @@
 # Exception 🚦
 
-Version 2.1.0
+[![NPM Latest Version][version-badge]][npm-url] [![Coverage Status][coverage-badge]][coverage-url] [![NPM Monthly Downloads][downloads-badge]][npm-url] [![Dependencies][deps-badge]][deps-url]
 
-[![Coverage Status](https://coveralls.io/repos/github/alessiofrittoli/exception/badge.svg)](https://coveralls.io/github/alessiofrittoli/exception) [![Dependencies](https://img.shields.io/librariesio/release/npm/%40alessiofrittoli%2Fexception)](https://libraries.io/npm/%40alessiofrittoli%2Fexception)
+[version-badge]: https://img.shields.io/npm/v/%40alessiofrittoli%2Fexception
+[npm-url]: https://npmjs.org/package/%40alessiofrittoli%2Fexception
+[coverage-badge]: https://coveralls.io/repos/github/alessiofrittoli/exception/badge.svg
+[coverage-url]: https://coveralls.io/github/alessiofrittoli/exception
+[downloads-badge]: https://img.shields.io/npm/dm/%40alessiofrittoli%2Fexception.svg
+[deps-badge]: https://img.shields.io/librariesio/release/npm/%40alessiofrittoli%2Fexception
+[deps-url]: https://libraries.io/npm/%40alessiofrittoli%2Fexception
 
 ## Handle errors with ease
 
