@@ -1,14 +1,21 @@
 # Exception 🚦
 
-[![NPM Latest Version][version-badge]][npm-url] [![Coverage Status][coverage-badge]][coverage-url] [![NPM Monthly Downloads][downloads-badge]][npm-url] [![Dependencies][deps-badge]][deps-url]
+[![NPM Latest Version][version-badge]][npm-url] [![Coverage Status][coverage-badge]][coverage-url] [![Socket Status][socket-badge]][socket-url] [![NPM Monthly Downloads][downloads-badge]][npm-url] [![Dependencies][deps-badge]][deps-url]
+
+[![GitHub Sponsor][sponsor-badge]][sponsor-url]
 
 [version-badge]: https://img.shields.io/npm/v/%40alessiofrittoli%2Fexception
 [npm-url]: https://npmjs.org/package/%40alessiofrittoli%2Fexception
 [coverage-badge]: https://coveralls.io/repos/github/alessiofrittoli/exception/badge.svg
 [coverage-url]: https://coveralls.io/github/alessiofrittoli/exception
+[socket-badge]: https://socket.dev/api/badge/npm/package/@alessiofrittoli/exception
+[socket-url]: https://socket.dev/npm/package/@alessiofrittoli/exception/overview
 [downloads-badge]: https://img.shields.io/npm/dm/%40alessiofrittoli%2Fexception.svg
 [deps-badge]: https://img.shields.io/librariesio/release/npm/%40alessiofrittoli%2Fexception
 [deps-url]: https://libraries.io/npm/%40alessiofrittoli%2Fexception
+
+[sponsor-badge]: https://img.shields.io/static/v1?label=Fund%20this%20package&message=%E2%9D%A4&logo=GitHub&color=%23DB61A2
+[sponsor-url]: https://github.com/sponsors/alessiofrittoli
 
 ## Handle errors with ease
 
@@ -22,6 +29,8 @@ This documentation describes the `Exception` class, which provides a structured 
   - [Exception Class](#exception-class)
   - [Usage Scenarios](#usage-scenarios)
 - [Development](#development)
+  - [Install depenendencies](#install-depenendencies)
+  - [Build the source code](#build-the-source-code)
   - [ESLint](#eslint)
   - [Jest](#jest)
 - [Contributing](#contributing)
@@ -273,9 +282,9 @@ or using `pnpm`
 pnpm i
 ```
 
-#### Build your source code
+#### Build the source code
 
-Run the following command to build code for distribution.
+Run the following command to test and build code for distribution.
 
 ```bash
 pnpm build
@@ -295,7 +304,7 @@ Run all the defined test suites by running the following:
 
 ```bash
 # Run tests and watch file changes.
-pnpm test
+pnpm test:watch
 
 # Run tests and watch file changes with jest-environment-jsdom.
 pnpm test:jsdom
@@ -309,6 +318,8 @@ pnpm test:ci:jsdom
 
 You can eventually run specific suits like so:
 
+- See [`package.json`](./package.json) file scripts for more info.
+
 ```bash
 pnpm test:jest
 pnpm test:jest:jsdom
@@ -321,15 +332,20 @@ An HTTP server is then started to serve coverage files from `./coverage` folder.
 ⚠️ You may see a blank page the first time you run this command. Simply refresh the browser to see the updates.
 
 ```bash
-pnpm test:coverage
+test:coverage:serve
 ```
 
 ---
 
 ### Contributing
 
-Contributions are truly welcome!\
+Contributions are truly welcome!
+
 Please refer to the [Contributing Doc](./CONTRIBUTING.md) for more information on how to start contributing to this project.
+
+Help keep this project up to date with [GitHub Sponsor][sponsor-url].
+
+[![GitHub Sponsor][sponsor-badge]][sponsor-url]
 
 ---
 
