@@ -3,7 +3,7 @@ import { ErrorCode } from './code'
 /**
  * Interface representing the options for an Exception.
  *
- * @template TCode - The type of the error code.
+ * @template TCode The type of the error code.
  * @extends ErrorOptions
  */
 export interface ExceptionOptions<TCode = ErrorCode> extends ErrorOptions
@@ -23,8 +23,8 @@ export interface ExceptionOptions<TCode = ErrorCode> extends ErrorOptions
  * @template TMessage	The type of the message property of the Exception. Defaults to `string`.
  * @template TCode		The type of the code property of the Exception. Defaults to `ErrorCode`.
  *
- * @extends {Error}
- * @implements {ExceptionOptions<TCode>}
+ * @extends Error
+ * @implements ExceptionOptions<TCode>
  */
 export class Exception<TMessage = string, TCode = ErrorCode> extends Error implements ExceptionOptions<TCode>
 {
@@ -32,7 +32,7 @@ export class Exception<TMessage = string, TCode = ErrorCode> extends Error imple
 	message: TMessage
 	status
 	name
-	typename: 'Exception'
+	private __typename: 'Exception'
 	code
 
 
@@ -46,8 +46,8 @@ export class Exception<TMessage = string, TCode = ErrorCode> extends Error imple
 	{
 		super( '', options )
 
-		this.typename	= 'Exception'
-		this.name		= options.name || this.typename
+		this.__typename	= 'Exception'
+		this.name		= options.name || this.__typename
 		this.message	= message
 		this.code		= options.code
 		this.status		= options.status
@@ -62,14 +62,14 @@ export class Exception<TMessage = string, TCode = ErrorCode> extends Error imple
 	 * @template TCode		The type of the code property of the Exception.
 	 * 
 	 * @param	error The error to check.
-	 * @returns	`true` if the error is an instance of Exception or has a `typename` property equal to 'Exception', `false` otherwise.
+	 * @returns	`true` if the error is an instance of Exception or has a `__typename` property equal to 'Exception', `false` otherwise.
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	static isException<TMessage = string, TCode = ErrorCode>( error: any ): error is Exception<TMessage, TCode>
 	{
 		return (
 			error instanceof Exception ||
-			( typeof error === 'object' && 'typename' in error && error.typename === 'Exception' )
+			( typeof error === 'object' && '__typename' in error && error.__typename === 'Exception' )
 		)
 	}
 
@@ -83,8 +83,8 @@ export class Exception<TMessage = string, TCode = ErrorCode> extends Error imple
 	{
 		return {
 			...this,
-			message: this.message,
-			cause: this.cause,
+			message	: this.message,
+			cause	: this.cause,
 		}
 	}
 }
