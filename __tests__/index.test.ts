@@ -61,6 +61,49 @@ describe( 'Exception', () => {
 		} )
 	
 	} )
+
+
+	describe( 'Exception.isAbortError()', () => {
+
+		it( 'checks if error is an Exception with ABORT ErroCode', () => {
+
+			expect(
+				Exception.isAbortError( new Exception( 'Abort Reason', { code: ErrorCode.ABORT } ) )
+			).toBe( true )
+
+		} )
+
+
+		it( 'checks if error is an Exception with AbortError as name', () => {
+
+			expect(
+				Exception.isAbortError( new Exception( 'Abort Reason', { name: 'AbortError', code: ErrorCode.ABORT } ) )
+			).toBe( true )
+
+		} )
+
+		
+		it( 'supports Exception JSON object', () => {
+			const error = (
+				JSON.parse( JSON.stringify( new Exception( 'Abort Reason', {
+					code: ErrorCode.ABORT,
+				} ) ) )
+			)
+			
+			const error2 = (
+				JSON.parse( JSON.stringify( new Exception( 'Abort Reason', {
+					code: ErrorCode.ABORT,
+					name: 'AbortError',
+				} ) ) )
+			)
+	
+			expect( Exception.isAbortError( error ) )
+				.toBe( true )
+			expect( Exception.isAbortError( error2 ) )
+				.toBe( true )
+		} )
+
+	} )
 	
 	
 	describe( 'Exception.toJSON()', () => {
