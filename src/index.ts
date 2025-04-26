@@ -72,6 +72,26 @@ export class Exception<TMessage = string, TCode = ErrorCode> extends Error imple
 			( typeof error === 'object' && '__typename' in error && error.__typename === 'Exception' )
 		)
 	}
+	
+
+	/**
+	 * Determines if the provided error is an instance of the Exception class and has the ABORT ErrorCode.
+	 * 
+	 * This won't work for `new DOMException( 'Abort reason', 'AbortError' )` since we type guard the checked value to `Exception<TMessage, ErrorCode.ABORT>`.
+	 *
+	 * @template TMessage The type of the message property of the Exception.
+	 * 
+	 * @param	error The error to check.
+	 * @returns	`true` if the error is an `Exception` and has the ABORT ErrorCode, `false` otherwise.
+	 */
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	static isAbortError<TMessage = string>( error: any ): error is Exception<TMessage, ErrorCode.ABORT>
+	{
+		return (
+			Exception.isException( error ) &&
+			( error.name === 'AbortError' || error.code === ErrorCode.ABORT )
+		)
+	}
 
 
 	/**
