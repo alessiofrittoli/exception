@@ -43,6 +43,11 @@
 			"types": "./dist/code.d.ts",
 			"import": "./dist/code.mjs",
 			"require": "./dist/code.js"
+		},
+		"./abort": {
+			"types": "./dist/abort.d.ts",
+			"import": "./dist/abort.mjs",
+			"require": "./dist/abort.js"
 		}
 	},
 	"sideEffects": false,
