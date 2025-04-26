@@ -27,6 +27,7 @@ This documentation describes the `Exception` class, which provides a structured 
 - [API Reference](#api-reference)
   - [ExceptionOptions Interface](#exceptionoptions-interface)
   - [Exception Class](#exception-class)
+  - [AbortError Class](#aborterror-class)
   - [Usage Scenarios](#usage-scenarios)
 - [Development](#development)
   - [Install depenendencies](#install-depenendencies)
@@ -97,8 +98,8 @@ import { Exception } from '@alessiofrittoli/exception'
 
 try {
   throw new Exception( 'Resource not found', {
-    code	: 'ERR:NOTFOUND',
-    status	: 404,
+    code    : 'ERR:NOTFOUND',
+    status  : 404,
   } )
 } catch ( error ) {
   console.error( error )
@@ -142,22 +143,52 @@ console.log( Exception.isException( error ) ) // Outputs: true
 
 ---
 
+#### `AbortError` Class
+
+The `AbortError` class extends the [`Exception` Class](#exception-class) and offers a preset configuration for easier usage.
+
+##### Constructor
+
+The constructor initializes an `AbortError` instance with a custom message and options.
+
+###### Parameters
+
+| Parameter | Type               | Description                                                     |
+|-----------|--------------------|-----------------------------------------------------------------|
+| `message` | `TMessage`         | (Required) The error message. Can be a string or a custom type. |
+| `options` | `AbortErrorOptions`| (Optional) An object containing the error options. It extends the [`ExceptionOptions` Interface](#exceptionoptions-interface) and omit `code` and `name` properties wich are set by `AbortError` for you. |
+
+---
+
 #### Usage Scenarios
 
-##### Custom Error Handling
-
-The `Exception` class is ideal for creating domain-specific errors with additional metadata, such as error codes and HTTP statuses.
-
-###### Example
+##### Precise Abort Errors Handling
 
 ```ts
+import { AbortError } from '@alessiofrittoli/exception/abort'
+
 try {
-  await fetch( ... )
+  const controller = new AbortController()
+  const { signal } = controller
+
+  button.addEventListener( 'click', () => {
+    controller.abort( new AbortError( 'User cancelled the request.' ) )
+  } )
+
+  await fetch( ..., { signal } )
 } catch ( error ) {
-  // error thrown by the server: Exception( 'Wrong value.', { code: ErrorCode.WRONG_VALUE, status: 422 } )
-  if ( Exception.isException( error ) ) {
-    console.log( error.code ) // `error.code` is type of `ErrorCode`.
+
+  if ( AbortError.isException( error ) ) {
+    if ( AbortError.isAbortError( error ) ) {
+      // handle abort error
+      console.log( error.code ) // `error.code` is type of `ErrorCode.ABORT`.
+      return
+    }
+    // handle other Exception errors
+    return
   }
+  // handle other unknown errors
+  
 }
 ```
 
