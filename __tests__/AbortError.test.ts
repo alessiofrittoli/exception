@@ -31,4 +31,17 @@ describe( 'AbortError', () => {
 
 	} )
 
+
+	describe( 'AbortError.isAbortError()', () => {
+	
+		it( 'checks if error is an AbortError with ABORT ErroCode', () => {
+
+			expect(
+				AbortError.isAbortError( new AbortError( 'Abort Reason' ) )
+			).toBe( true )
+
+		} )
+
+	} )
+
 } )
