@@ -156,7 +156,7 @@ The constructor initializes an `AbortError` instance with a custom message and o
 | Parameter | Type               | Description                                                     |
 |-----------|--------------------|-----------------------------------------------------------------|
 | `message` | `TMessage`         | (Required) The error message. Can be a string or a custom type. |
-| `options` | `AbortErrorOptions`| (Optional) An object containing the error options. It extends the [`ExceptionOptions` Interface](#exceptionoptions-interface) and omit the `name` property. The `code` defaults to `ErrorCode.ABORT` but can be optionally customized. |
+| `options` | `AbortErrorOptions`| (Optional) An object containing the error options. It extends the [`ExceptionOptions` Interface](#exceptionoptions-interface) and omit `code` and `name` properties wich are set by `AbortError` for you. |
 
 ---
 
@@ -182,45 +182,6 @@ try {
     if ( AbortError.isAbortError( error ) ) {
       // handle abort error
       console.log( error.code ) // `error.code` is type of `ErrorCode.ABORT`.
-      return
-    }
-    // handle other Exception errors
-    return
-  }
-  // handle other unknown errors
-  
-}
-```
-
----
-
-##### Using custom Abort Error codes
-
-```ts
-import { AbortError } from '@alessiofrittoli/exception/abort'
-
-enum CustomAbortCode
-{
-  CUSTOM_CODE = 'ERR:CUSTOM_ABORT_CODE',
-}
-
-try {
-  const controller = new AbortController()
-  const { signal } = controller
-
-  button.addEventListener( 'click', () => {
-    controller.abort(
-      new AbortError( 'User cancelled the request.', { code: CustomAbortCode.CUSTOM_CODE } )
-    )
-  } )
-
-  await fetch( ..., { signal } )
-} catch ( error ) {
-
-  if ( AbortError.isException( error ) ) {
-    if ( AbortError.isAbortError( error, CustomAbortCode.CUSTOM_CODE ) ) {
-      // handle abort error
-      console.log( error.code ) // `error.code` is type of `CustomAbortCode.CUSTOM_CODE`.
       return
     }
     // handle other Exception errors

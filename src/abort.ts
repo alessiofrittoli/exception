@@ -1,4 +1,4 @@
-import { Exception, type ExceptionOptions } from '.'
+import { Exception, ExceptionOptions } from '.'
 import { ErrorCode } from './code'
 
 /**
@@ -6,7 +6,7 @@ import { ErrorCode } from './code'
  *
  * @extends ExceptionOptions
  */
-export interface AbortErrorOptions<TCode = ErrorCode> extends Partial<Omit<ExceptionOptions<TCode>, 'name'>>
+export interface AbortErrorOptions extends Omit<ExceptionOptions, 'code' | 'name'>
 {
 	/** The HTTP status code associated with the Exception. */
 	status?: number
@@ -20,19 +20,11 @@ export interface AbortErrorOptions<TCode = ErrorCode> extends Partial<Omit<Excep
  *
  * @extends Exception
  */
-export class AbortError<
-	TMessage = string, TCode = ErrorCode
-> extends Exception<TMessage, TCode> implements AbortErrorOptions<TCode>
+export class AbortError<TMessage> extends Exception<TMessage, ErrorCode.ABORT> implements AbortErrorOptions
 {
-	constructor( reason: TMessage, options: AbortErrorOptions<TCode> = {} )
+	constructor( reason: TMessage, options?: AbortErrorOptions )
 	{
-		const name = 'AbortError'
-
-		const {
-			code = ErrorCode.ABORT as TCode, ...rest
-		} = options
-
-		super( reason, { ...rest, name, code } )
+		super( reason, { name: 'AbortError', ...options, code: ErrorCode.ABORT, } )
 	}
 
 
@@ -46,11 +38,9 @@ export class AbortError<
 	 * @param	error The error to check.
 	 * @returns	`true` if the error is an `AbortError` and has the ABORT ErrorCode, `false` otherwise.
 	 */
-	static isAbortError<
-		TMessage = string, TCode = ErrorCode
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	>( error: any, code?: TCode ): error is AbortError<TMessage, TCode>
+	static isAbortError<TMessage = string>( error: any ): error is AbortError<TMessage>
 	{
-		return super.isAbortError( error, code )	
+		return super.isAbortError( error )
 	}
 }
