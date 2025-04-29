@@ -84,12 +84,14 @@ export class Exception<TMessage = string, TCode = ErrorCode> extends Error imple
 	 * @param	error The error to check.
 	 * @returns	`true` if the error is an `Exception` and has the ABORT ErrorCode, `false` otherwise.
 	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	static isAbortError<TMessage = string>( error: any ): error is Exception<TMessage, ErrorCode.ABORT>
+	static isAbortError<TMessage = string, TCode = ErrorCode>(
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		error: any, code: TCode = ErrorCode.ABORT as TCode
+	): error is Exception<TMessage, TCode>
 	{
 		return (
 			Exception.isException( error ) &&
-			( error.name === 'AbortError' || error.code === ErrorCode.ABORT )
+			( error.name === 'AbortError' || error.code === code )
 		)
 	}
 
