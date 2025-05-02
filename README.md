@@ -242,14 +242,18 @@ It is designed to simplify error handling and improve feedback quality returned 
 
 <summary>Constants Overview</summary>
 
-| Constant      | Value            | Description                                             |
-|---------------|------------------|---------------------------------------------------------|
-| `UNKNOWN`     | `ERR:UNKNOWN`    | Returned when an unexpected error occured.              |
-| `ABORT`       | `ERR:ABORT`      | Returned when user abort the request.                   |
-| `EMPTY_VALUE` | `ERR:EMPTYVALUE` | Returned when a required value is "falsy".              |
-| `WRONG_VALUE` | `ERR:WRONGVALUE` | Return when a required value is not the expected value. |
-| `EXPIRED`     | `ERR:EXPIRED`    | Returned when a requested has been performed too late.  |
-| `TOO_EARLY`   | `ERR:TOOEARLY`   | Returned when a request has been performed too early.   |
+| Constant        | Value              | Description                                             |
+|-----------------|--------------------|---------------------------------------------------------|
+| `UNKNOWN`       | `ERR:UNKNOWN`      | Returned when an unexpected error occured.              |
+| `ABORT`         | `ERR:ABORT`        | Returned when user abort the request.                   |
+| `EMPTY_VALUE`   | `ERR:EMPTYVALUE`   | Returned when a required value is "falsy".              |
+| `WRONG_VALUE`   | `ERR:WRONGVALUE`   | Return when a required value is not the expected value. |
+| `EXPIRED`       | `ERR:EXPIRED`      | Returned when a requested has been performed too late.  |
+| `TOO_EARLY`     | `ERR:TOOEARLY`     | Returned when a request has been performed too early.   |
+| `TOO_MANY`      | `ERR:TOOMANY`      | Could be return in combination with a 429 Too Many Requests Response Status. |
+| `QUOTA_REACHED` | `ERR:QUOTAREACHED` | Returned when a specific quota has been reached.        |
+| `NOT_FOUND`     | `ERR:NOTFOUND`     | Returned when a resource cannot be found.               |
+| `OFFLINE`       | `ERR:INTERNETDISCONNECTED` | Could be used to throw errors when user is offline. |
 
 </details>
 
