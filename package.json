@@ -74,11 +74,11 @@
 		"test:coverage:serve": "concurrently --prefix none --kill-others \"pnpm test:coverage\" \"pnpm test:serve-coverage\""
 	},
 	"devDependencies": {
-		"@alessiofrittoli/node-scripts": "^2.4.0",
+		"@alessiofrittoli/node-scripts": "^2.5.0",
 		"@eslint/js": "^9.25.1",
 		"@jest/globals": "^29.7.0",
 		"@types/jest": "^29.5.14",
-		"@types/node": "^22.15.2",
+		"@types/node": "^22.15.3",
 		"concurrently": "^9.1.2",
 		"dotenv": "^16.5.0",
 		"esbuild": "0.25.3",
@@ -90,7 +90,7 @@
 		"ts-node": "^10.9.2",
 		"tsup": "^8.4.0",
 		"typescript": "^5.8.3",
-		"typescript-eslint": "^8.31.0"
+		"typescript-eslint": "^8.31.1"
 	},
 	"pnpm": {
 		"onlyBuiltDependencies": [
