@@ -28,7 +28,9 @@ This documentation describes the `Exception` class, which provides a structured 
   - [ExceptionOptions Interface](#exceptionoptions-interface)
   - [Exception Class](#exception-class)
   - [AbortError Class](#aborterror-class)
-  - [Usage Scenarios](#usage-scenarios)
+    - [AbortError Usage Scenarios](#aborterror-usage-scenarios)
+  - [`ErrorCode` enum](#errorcode-enum)
+  - [Examples](#examples)
 - [Development](#development)
   - [Install depenendencies](#install-depenendencies)
   - [Build the source code](#build-the-source-code)
@@ -160,9 +162,9 @@ The constructor initializes an `AbortError` instance with a custom message and o
 
 ---
 
-#### Usage Scenarios
+##### AbortError Usage Scenarios
 
-##### Precise Abort Errors Handling
+###### Precise Abort Errors Handling
 
 ```ts
 import { AbortError } from '@alessiofrittoli/exception/abort'
@@ -194,7 +196,7 @@ try {
 
 ---
 
-##### Using custom Abort Error codes
+###### Using custom Abort Error codes
 
 ```ts
 import { AbortError } from '@alessiofrittoli/exception/abort'
@@ -285,11 +287,9 @@ export default ErrorCode
 
 ---
 
-<details>
+#### Examples
 
-<summary>Usage</summary>
-
-#### Using the default `ErrorCode` to throw a new `Exception`
+##### Using the default `ErrorCode` to throw a new `Exception`
 
 ```ts
 import { Exception } from '@alessiofrittoli/exception'
@@ -301,7 +301,7 @@ throw new Exception( 'Password is a required field to log you in.', {
 } )
 ```
 
-#### Using custom `ErrorCode` to throw a new `Exception`
+##### Using custom `ErrorCode` to throw a new `Exception`
 
 ```ts
 import { Exception } from '@alessiofrittoli/exception'
@@ -313,7 +313,7 @@ throw new Exception( 'Invalid signature.', {
 } )
 ```
 
-#### Using `ErrorCode` to handle errors
+##### Using `ErrorCode` to handle errors
 
 ```ts
 import { ErrorCode } from '@/error-code' // previously created in `myproject/src/error-code.ts`
@@ -333,8 +333,6 @@ try {
   }
 }
 ```
-
-</details>
 
 ---
 
