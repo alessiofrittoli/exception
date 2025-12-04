@@ -13,7 +13,6 @@
 [downloads-badge]: https://img.shields.io/npm/dm/%40alessiofrittoli%2Fexception.svg
 [deps-badge]: https://img.shields.io/librariesio/release/npm/%40alessiofrittoli%2Fexception
 [deps-url]: https://libraries.io/npm/%40alessiofrittoli%2Fexception
-
 [sponsor-badge]: https://img.shields.io/static/v1?label=Fund%20this%20package&message=%E2%9D%A4&logo=GitHub&color=%23DB61A2
 [sponsor-url]: https://github.com/sponsors/alessiofrittoli
 
@@ -71,7 +70,7 @@ The `ExceptionOptions` interface defines the optional parameters for the `Except
 ##### Properties
 
 | Property | Type     | Default     | Description                                                      |
-|----------|----------|-------------|------------------------------------------------------------------|
+| -------- | -------- | ----------- | ---------------------------------------------------------------- |
 | `code`   | `TCode`  | -           | (Required) A numeric or custom code representing the error type. |
 | `name`   | `string` | `Exception` | (Optional) A string representing the error name.                 |
 | `status` | `number` | -           | (Optional) An HTTP status code associated with the error.        |
@@ -89,22 +88,22 @@ The constructor initializes an `Exception` instance with a custom message and op
 ###### Parameters
 
 | Parameter | Type               | Description                                                     |
-|-----------|--------------------|-----------------------------------------------------------------|
+| --------- | ------------------ | --------------------------------------------------------------- |
 | `message` | `TMessage`         | (Required) The error message. Can be a string or a custom type. |
 | `options` | `ExceptionOptions` | (Required) An object containing the error options.              |
 
 ###### Example
 
 ```ts
-import { Exception } from '@alessiofrittoli/exception'
+import { Exception } from "@alessiofrittoli/exception";
 
 try {
-  throw new Exception( 'Resource not found', {
-    code    : 'ERR:NOTFOUND',
-    status  : 404,
-  } )
-} catch ( error ) {
-  console.error( error )
+  throw new Exception("Resource not found", {
+    code: "ERR:NOTFOUND",
+    status: 404,
+  });
+} catch (error) {
+  console.error(error);
 }
 ```
 
@@ -120,27 +119,29 @@ It supports also a JSON representation of the `Exception` class (commonly return
 
 ```ts
 try {
-  throw new Exception( 'Something went wrong', { code: 'ERR:UNKNOWN' } )
-} catch ( error ) {
-  if ( Exception.isException( error ) ) {
+  throw new Exception("Something went wrong", { code: "ERR:UNKNOWN" });
+} catch (error) {
+  if (Exception.isException(error)) {
     // we can safely access `Exception` properties
-    console.error( `Error [${ error.code }]: ${ error.message }` )
+    console.error(`Error [${error.code}]: ${error.message}`);
   } else {
-    console.error( error )
+    console.error(error);
   }
 }
 ```
 
 ```ts
 /** Simulates JSON Exception returned by a server JSON Response. */
-const error = (
-  JSON.parse( JSON.stringify( new Exception( 'Exception with custom name.', {
-    code: 0,
-    name: 'AbortError',
-  } ) ) )
-)
+const error = JSON.parse(
+  JSON.stringify(
+    new Exception("Exception with custom name.", {
+      code: 0,
+      name: "AbortError",
+    })
+  )
+);
 
-console.log( Exception.isException( error ) ) // Outputs: true
+console.log(Exception.isException(error)); // Outputs: true
 ```
 
 ---
@@ -155,10 +156,10 @@ The constructor initializes an `AbortError` instance with a custom message and o
 
 ###### Parameters
 
-| Parameter | Type               | Description                                                     |
-|-----------|--------------------|-----------------------------------------------------------------|
-| `message` | `TMessage`         | (Required) The error message. Can be a string or a custom type. |
-| `options` | `AbortErrorOptions`| (Optional) An object containing the error options. It extends the [`ExceptionOptions` Interface](#exceptionoptions-interface) and omit the `name` property. The `code` defaults to `ErrorCode.ABORT` but can be optionally customized. |
+| Parameter | Type                | Description                                                                                                                                                                                                                            |
+| --------- | ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `message` | `TMessage`          | (Required) The error message. Can be a string or a custom type.                                                                                                                                                                        |
+| `options` | `AbortErrorOptions` | (Optional) An object containing the error options. It extends the [`ExceptionOptions` Interface](#exceptionoptions-interface) and omit the `name` property. The `code` defaults to `ErrorCode.ABORT` but can be optionally customized. |
 
 ---
 
@@ -190,7 +191,7 @@ try {
     return
   }
   // handle other unknown errors
-  
+
 }
 ```
 
@@ -229,7 +230,7 @@ try {
     return
   }
   // handle other unknown errors
-  
+
 }
 ```
 
@@ -244,18 +245,18 @@ It is designed to simplify error handling and improve feedback quality returned 
 
 <summary>Constants Overview</summary>
 
-| Constant        | Value              | Description                                             |
-|-----------------|--------------------|---------------------------------------------------------|
-| `UNKNOWN`       | `ERR:UNKNOWN`      | Returned when an unexpected error occured.              |
-| `ABORT`         | `ERR:ABORT`        | Returned when user abort the request.                   |
-| `EMPTY_VALUE`   | `ERR:EMPTYVALUE`   | Returned when a required value is "falsy".              |
-| `WRONG_VALUE`   | `ERR:WRONGVALUE`   | Return when a required value is not the expected value. |
-| `EXPIRED`       | `ERR:EXPIRED`      | Returned when a requested has been performed too late.  |
-| `TOO_EARLY`     | `ERR:TOOEARLY`     | Returned when a request has been performed too early.   |
-| `TOO_MANY`      | `ERR:TOOMANY`      | Could be return in combination with a 429 Too Many Requests Response Status. |
-| `QUOTA_REACHED` | `ERR:QUOTAREACHED` | Returned when a specific quota has been reached.        |
-| `NOT_FOUND`     | `ERR:NOTFOUND`     | Returned when a resource cannot be found.               |
-| `OFFLINE`       | `ERR:INTERNETDISCONNECTED` | Could be used to throw errors when user is offline. |
+| Constant        | Value                      | Description                                                                  |
+| --------------- | -------------------------- | ---------------------------------------------------------------------------- |
+| `UNKNOWN`       | `ERR:UNKNOWN`              | Returned when an unexpected error occured.                                   |
+| `ABORT`         | `ERR:ABORT`                | Returned when user abort the request.                                        |
+| `EMPTY_VALUE`   | `ERR:EMPTYVALUE`           | Returned when a required value is "falsy".                                   |
+| `WRONG_VALUE`   | `ERR:WRONGVALUE`           | Return when a required value is not the expected value.                      |
+| `EXPIRED`       | `ERR:EXPIRED`              | Returned when a requested has been performed too late.                       |
+| `TOO_EARLY`     | `ERR:TOOEARLY`             | Returned when a request has been performed too early.                        |
+| `TOO_MANY`      | `ERR:TOOMANY`              | Could be return in combination with a 429 Too Many Requests Response Status. |
+| `QUOTA_REACHED` | `ERR:QUOTAREACHED`         | Returned when a specific quota has been reached.                             |
+| `NOT_FOUND`     | `ERR:NOTFOUND`             | Returned when a resource cannot be found.                                    |
+| `OFFLINE`       | `ERR:INTERNETDISCONNECTED` | Could be used to throw errors when user is offline.                          |
 
 </details>
 
@@ -271,18 +272,17 @@ To fill this gap, you can "extend" the `ErrorCode` enum by doing so:
 
 ```ts
 // myproject/src/error-code.ts
-import { ErrorCode as Exception } from '@alessiofrittoli/exception/code'
+import { ErrorCode as Exception } from "@alessiofrittoli/exception/code";
 
 /** Your project custom `ErrorCode`. */
-export enum MyProjectErrorCode
-{
-  INVALID_SIGN = 'ERR:INVALIDSIGN',
+export enum MyProjectErrorCode {
+  INVALID_SIGN = "ERR:INVALIDSIGN",
 }
 
-const ErrorCode = { Exception, MyProjectErrorCode }
-type ErrorCode = MergedEnumValue<typeof ErrorCode>
+const ErrorCode = { ...Exception, ...MyProjectErrorCode };
+type ErrorCode = MergedEnumValue<typeof ErrorCode>;
 
-export default ErrorCode
+export default ErrorCode;
 ```
 
 ⚠️ The Type `MergedEnumValue<T>` is globally delcared from `@alessiofrittoli/type-utils` so make sure to install it if needed.
@@ -296,38 +296,38 @@ export default ErrorCode
 ##### Using the default `ErrorCode` to throw a new `Exception`
 
 ```ts
-import { Exception } from '@alessiofrittoli/exception'
-import { ErrorCode } from '@alessiofrittoli/exception/code'
+import { Exception } from "@alessiofrittoli/exception";
+import { ErrorCode } from "@alessiofrittoli/exception/code";
 
-throw new Exception( 'Password is a required field to log you in.', {
-  code    : ErrorCode.EMPTY_VALUE,
-  status  : 422,
-} )
+throw new Exception("Password is a required field to log you in.", {
+  code: ErrorCode.EMPTY_VALUE,
+  status: 422,
+});
 ```
 
 ##### Using custom `ErrorCode` to throw a new `Exception`
 
 ```ts
-import { Exception } from '@alessiofrittoli/exception'
-import { ErrorCode } from '@/error-code' // previously created in `myproject/src/error-code.ts`
+import { Exception } from "@alessiofrittoli/exception";
+import { ErrorCode } from "@/error-code"; // previously created in `myproject/src/error-code.ts` (see - Extending the `enum` in your project)
 
-throw new Exception( 'Invalid signature.', {
-  code    : ErrorCode.MyProjectErrorCode.INVALID_SIGN,
-  status  : 403,
-} )
+throw new Exception("Invalid signature.", {
+  code: ErrorCode.INVALID_SIGN,
+  status: 403,
+});
 ```
 
 ##### Using `ErrorCode` to handle errors
 
 ```ts
-import { ErrorCode } from '@/error-code' // previously created in `myproject/src/error-code.ts`
+import { ErrorCode } from '@/error-code' // previously created in `myproject/src/error-code.ts` (see - Extending the `enum` in your project)
 
 try {
   ...
 } catch ( error ) {
   if ( Exception.isException<string, ErrorCode>( error ) ) {
     switch ( error.code ) { // `error.code` is now type of `ErrorCode` (custom).
-      case ErrorCode.MyProjectErrorCode.INVALID_SIGN:
+      case ErrorCode.INVALID_SIGN:
         console.log( 'The signature is not valid.' )
         break
       case ErrorCode.Exception.UNKNOWN:
