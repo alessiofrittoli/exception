@@ -275,17 +275,13 @@ To fill this gap, you can "extend" the `ErrorCode` enum by doing so:
 import { ErrorCode as Exception } from "@alessiofrittoli/exception/code";
 
 /** Your project custom `ErrorCode`. */
-export enum MyProjectErrorCode {
-  INVALID_SIGN = "ERR:INVALIDSIGN",
-}
+export const MyProjectErrorCode = {
+  INVALID_SIGN: "ERR:INVALIDSIGN",
+} as const;
 
-const ErrorCode = { ...Exception, ...MyProjectErrorCode };
-type ErrorCode = MergedEnumValue<typeof ErrorCode>;
-
-export default ErrorCode;
+export const ErrorCode = { ...Exception, ...MyProjectErrorCode };
+export type ErrorCode = (typeof ErrorCode)[keyof typeof ErrorCode];
 ```
-
-⚠️ The Type `MergedEnumValue<T>` is globally delcared from `@alessiofrittoli/type-utils` so make sure to install it if needed.
 
 </details>
 
