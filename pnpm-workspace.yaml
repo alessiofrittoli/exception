@@ -1,3 +1,9 @@
-onlyBuiltDependencies:
-  - esbuild
-  - unrs-resolver
+allowBuilds:
+  '@alessiofrittoli/fetcher': false
+  '@alessiofrittoli/type-utils': false
+  '@parcel/watcher': true
+  esbuild: true
+  unrs-resolver: true
+minimumReleaseAgeExclude:
+  - '@alessiofrittoli/node-scripts@4.0.0-alpha.1'
+  - '@alessiofrittoli/package-configs@1.5.0'
