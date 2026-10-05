@@ -1,93 +1,172 @@
+import { ExceptionName } from '@/error-names'
 import { ErrorCode } from '@/code'
 
 /**
  * Interface representing the options for an Exception.
  *
- * @template TCode The type of the error code.
+ * @template T The type of the error code.
+ *
  * @extends ErrorOptions
  */
-export interface ExceptionOptions<TCode = ErrorCode> extends ErrorOptions {
-	/** The error code associated with the Exception. */
-	code: TCode
-	/**  The name of the Exception. */
+export interface ExceptionOptions<T = ErrorCode> extends ErrorOptions {
+	/**
+	 * The error interface name.
+	 *
+	 * @see {@link ExceptionName} for a list of possible standard values.
+	 *
+	 * @default ExceptionName.Exception
+	 */
 	name?: string
-	/** The HTTP status code associated with the Exception. */
+	/**
+	 * The error message containing technical informations about the error.
+	 *
+	 * It shouldn't be rendered to the user.
+	 */
+	message?: string
+	/**
+	 * The error title.
+	 *
+	 */
+	title?: string
+	/**
+	 * The error description.
+	 *
+	 */
+	description?: string
+	/**
+	 * The error code associated with the Exception.
+	 *
+	 */
+	code: T
+	/**
+	 * Indicates whether the error is a critical error.
+	 *
+	 * @default false
+	 */
+	isCritical?: boolean
+	/**
+	 * The HTTP status code associated with the Exception.
+	 *
+	 */
 	status?: number
+	/**
+	 * The error cause.
+	 *
+	 */
+	cause?: unknown
 }
 
 /**
  * Exception Class.
  *
- * @template TMessage	The type of the message property of the Exception. Defaults to `string`.
- * @template TCode		The type of the code property of the Exception. Defaults to `ErrorCode`.
+ * @template T The type of the code property of the Exception. Defaults to `ErrorCode`.
  *
  * @extends Error
- * @implements ExceptionOptions<TCode>
+ * @implements ExceptionOptions<T>
  */
-export class Exception<TMessage = string, TCode = ErrorCode>
-	extends Error
-	implements ExceptionOptions<TCode>
-{
-	// @ts-expect-error Type 'TMessage' is not assignable to type 'string'.ts(2416)
-	readonly message: TMessage
-	readonly status
-	override readonly name
-	private readonly __typename: 'Exception'
-	readonly code
-	override readonly cause
+export class Exception<T = ErrorCode> extends Error {
+	private readonly __typename = ExceptionName.Exception
+	/**
+	 * The error interface name.
+	 *
+	 */
+	public override readonly name: string = this.__typename
+	/**
+	 * The error message containing technical informations about the error.
+	 *
+	 * ⚠️ do not render `Exception.message` to the user.
+	 */
+	public override readonly message
+	/**
+	 * The error title that can be rendered to the user.
+	 *
+	 */
+	public readonly title
+	/**
+	 * The error description that can be rendered to the user.
+	 *
+	 */
+	public readonly description
+	/**
+	 * The error code.
+	 *
+	 */
+	public readonly code
+	/**
+	 * Indicates whether the error is a critical error.
+	 *
+	 */
+	public readonly isCritical
+	/**
+	 * The HTTP status code associated with the Exception.
+	 *
+	 */
+	public readonly status
+	/**
+	 * The error cause.
+	 *
+	 */
+	public override readonly cause: unknown
 
 	/**
 	 * Constructs a new Exception instance.
 	 *
-	 * @param message The message describing the exception.
-	 * @param options Additional options for the exception.
+	 * @param options An object defining Exception options. See {@link ExceptionOptions} for more info.
 	 */
-	constructor(message: TMessage, options: ExceptionOptions<TCode>) {
-		super('', options)
+	public constructor(options: ExceptionOptions<T>) {
+		const { message = 'Unknown error.' } = options
 
-		this.__typename = 'Exception'
-		this.name = options.name || this.__typename
+		super(message)
+
+		if (options.name) {
+			this.name = options.name
+		}
+
 		this.message = message
+		this.title = options.title
+		this.description = options.description
 		this.code = options.code
+		this.isCritical = options.isCritical ?? false
 		this.status = options.status
-		this.cause = options.cause
+		this.cause = Exception.isException(options.cause) ? new Exception(options.cause) : options.cause
 	}
 
 	/**
 	 * Determines if the provided error is an instance of the Exception class.
 	 *
-	 * @template TMessage	The type of the message property of the Exception.
-	 * @template TCode		The type of the code property of the Exception.
+	 * @template T The type of the code property of the Exception.
 	 *
-	 * @param	error The error to check.
-	 * @returns	`true` if the error is an instance of Exception or has a `__typename` property equal to 'Exception', `false` otherwise.
+	 * @param error The error to check.
+	 * @returns `true` if the error is an instance of Exception or has a `__typename` property equal to 'Exception', `false` otherwise.
 	 */
-	static isException<TMessage = string, TCode = ErrorCode>(
+	public static isException<T = ErrorCode>(
 		// oxlint-disable-next-line typescript/no-explicit-any
 		error: any,
-	): error is Exception<TMessage, TCode> {
+	): error is Exception<T> {
 		return (
 			error instanceof Exception ||
-			(typeof error === 'object' && '__typename' in error && error.__typename === 'Exception')
+			(typeof error === 'object' &&
+				'__typename' in error &&
+				error.__typename === ExceptionName.Exception)
 		)
 	}
 
 	/**
 	 * Determines if the provided error is an instance of the Exception class and has the ABORT ErrorCode.
 	 *
-	 * This won't work for `new DOMException( 'Abort reason', 'AbortError' )` since we type guard the checked value to `Exception<TMessage, ErrorCode.ABORT>`.
+	 * @template T The type of the code property of the Exception.
 	 *
-	 * @template TMessage The type of the message property of the Exception.
-	 *
-	 * @param	error The error to check.
-	 * @returns	`true` if the error is an `Exception` and has the ABORT ErrorCode, `false` otherwise.
+	 * @param error The error to check.
+	 * @returns `true` if the error is an `Exception` and has the ABORT ErrorCode, `false` otherwise.
 	 */
-	static isAbortError<TMessage = string, TCode = ErrorCode>(
+	public static isAbortError<T = ErrorCode>(
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		error: any,
-		code: TCode = ErrorCode.ABORT as TCode,
-	): error is Exception<TMessage, TCode> {
-		return Exception.isException(error) && (error.name === 'AbortError' || error.code === code)
+		code: T = ErrorCode.ABORT as T,
+	): error is Exception<T> {
+		return (
+			Exception.isException(error) && (error.name === ExceptionName.AbortError || error.code === code)
+		)
 	}
 
 	/**
@@ -95,10 +174,7 @@ export class Exception<TMessage = string, TCode = ErrorCode>
 	 *
 	 * @returns A JSON representation of the instance, including the message property.
 	 */
-	toJSON(): this & {
-		message: TMessage
-		cause: unknown
-	} {
+	public toJSON(): this {
 		return {
 			...this,
 			message: this.message,
