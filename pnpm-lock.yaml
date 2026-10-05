@@ -9,8 +9,8 @@ importers:
   .:
     devDependencies:
       '@alessiofrittoli/node-scripts':
-        specifier: 4.0.0-alpha.1
-        version: 4.0.0-alpha.1(@alessiofrittoli/abort-controller@0.1.0)(@alessiofrittoli/exception@3.5.0)(@alessiofrittoli/package-configs@1.6.0(eslint@9.39.5(supports-color@8.1.1))(oxlint@1.86.0)(prettier-plugin-sort-imports@1.8.11(typescript@6.0.3))(prettier@3.9.9)(tsdown@0.23.0(typescript@6.0.3))(typescript-eslint@8.71.0(eslint@9.39.5(supports-color@8.1.1))(supports-color@8.1.1)(typescript@6.0.3))(typescript@6.0.3)(vite@8.3.2(@types/node@24.19.1)(esbuild@0.27.1))(vitest@5.0.3))(@alessiofrittoli/web-utils@2.3.0)
+        specifier: 4.0.0-alpha.3
+        version: 4.0.0-alpha.3(@alessiofrittoli/abort-controller@0.1.0)(@alessiofrittoli/exception@3.5.0)(@alessiofrittoli/package-configs@1.6.0(eslint@9.39.5(supports-color@8.1.1))(oxlint@1.86.0)(prettier-plugin-sort-imports@1.8.11(typescript@6.0.3))(prettier@3.9.9)(tsdown@0.23.0(typescript@6.0.3))(typescript-eslint@8.71.0(eslint@9.39.5(supports-color@8.1.1))(supports-color@8.1.1)(typescript@6.0.3))(typescript@6.0.3)(vite@8.3.2(@types/node@24.19.1)(esbuild@0.27.1))(vitest@5.0.3))(@alessiofrittoli/web-utils@2.3.0)
       '@alessiofrittoli/package-configs':
         specifier: 1.6.0
         version: 1.6.0(eslint@9.39.5(supports-color@8.1.1))(oxlint@1.86.0)(prettier-plugin-sort-imports@1.8.11(typescript@6.0.3))(prettier@3.9.9)(tsdown@0.23.0(typescript@6.0.3))(typescript-eslint@8.71.0(eslint@9.39.5(supports-color@8.1.1))(supports-color@8.1.1)(typescript@6.0.3))(typescript@6.0.3)(vite@8.3.2(@types/node@24.19.1)(esbuild@0.27.1))(vitest@5.0.3)
@@ -80,8 +80,8 @@ packages:
   '@alessiofrittoli/node-scripts@3.4.0':
     resolution: {integrity: sha512-iiZvYAGHd3wBvqDNYLa0qFG8hl0BWVTHOVgEx97npJOAtosVucS3O6YvXJgouVUU35QfszQ8KFbcKpVxrTItuQ==}
 
-  '@alessiofrittoli/node-scripts@4.0.0-alpha.1':
-    resolution: {integrity: sha512-DFuqwEd4/AGc65m1DMXFBs05KmpipsnLNqPYfSVa6+Jsq4FJsxRDGYBaepAlmbNggx7xyrXgEBEegj3bXpSXvA==}
+  '@alessiofrittoli/node-scripts@4.0.0-alpha.3':
+    resolution: {integrity: sha512-IuhZWTpBKYXlasFCA7shQ0qm5Hxv/rMiDxkWnI5VvRQ1HEoaoBlGlO95A3cXF/Tma4L6eGuFJoINgzmsQYO8aw==}
     engines: {node: '>=24.15.0', pnpm: '>=11.27.1'}
     peerDependencies:
       '@alessiofrittoli/abort-controller': ^0.1.0
@@ -1856,7 +1856,7 @@ snapshots:
       '@alessiofrittoli/exception': 3.5.0
       '@alessiofrittoli/web-utils': 2.3.0
 
-  '@alessiofrittoli/node-scripts@4.0.0-alpha.1(@alessiofrittoli/abort-controller@0.1.0)(@alessiofrittoli/exception@3.5.0)(@alessiofrittoli/package-configs@1.6.0(eslint@9.39.5(supports-color@8.1.1))(oxlint@1.86.0)(prettier-plugin-sort-imports@1.8.11(typescript@6.0.3))(prettier@3.9.9)(tsdown@0.23.0(typescript@6.0.3))(typescript-eslint@8.71.0(eslint@9.39.5(supports-color@8.1.1))(supports-color@8.1.1)(typescript@6.0.3))(typescript@6.0.3)(vite@8.3.2(@types/node@24.19.1)(esbuild@0.27.1))(vitest@5.0.3))(@alessiofrittoli/web-utils@2.3.0)':
+  '@alessiofrittoli/node-scripts@4.0.0-alpha.3(@alessiofrittoli/abort-controller@0.1.0)(@alessiofrittoli/exception@3.5.0)(@alessiofrittoli/package-configs@1.6.0(eslint@9.39.5(supports-color@8.1.1))(oxlint@1.86.0)(prettier-plugin-sort-imports@1.8.11(typescript@6.0.3))(prettier@3.9.9)(tsdown@0.23.0(typescript@6.0.3))(typescript-eslint@8.71.0(eslint@9.39.5(supports-color@8.1.1))(supports-color@8.1.1)(typescript@6.0.3))(typescript@6.0.3)(vite@8.3.2(@types/node@24.19.1)(esbuild@0.27.1))(vitest@5.0.3))(@alessiofrittoli/web-utils@2.3.0)':
     dependencies:
       '@alessiofrittoli/abort-controller': 0.1.0
       '@alessiofrittoli/exception': 3.5.0
