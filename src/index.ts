@@ -1,6 +1,8 @@
 import { ExceptionName } from '@/error-names'
 import { ErrorCode } from '@/code'
 
+export * from '@/error-names'
+
 /**
  * Interface representing the options for an Exception.
  *
