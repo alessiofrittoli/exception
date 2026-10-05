@@ -10,10 +10,10 @@ importers:
     devDependencies:
       '@alessiofrittoli/node-scripts':
         specifier: 4.0.0-alpha.1
-        version: 4.0.0-alpha.1(@alessiofrittoli/abort-controller@0.1.0)(@alessiofrittoli/exception@3.5.0)(@alessiofrittoli/package-configs@1.5.0(eslint@9.39.5(supports-color@8.1.1))(oxlint@1.86.0)(prettier-plugin-sort-imports@1.8.11(typescript@6.0.3))(prettier@3.9.9)(tsdown@0.23.0(typescript@6.0.3))(typescript-eslint@8.71.0(eslint@9.39.5(supports-color@8.1.1))(supports-color@8.1.1)(typescript@6.0.3))(typescript@6.0.3)(vite@8.3.2(@types/node@24.19.1)(esbuild@0.27.1))(vitest@5.0.3))(@alessiofrittoli/web-utils@2.3.0)
+        version: 4.0.0-alpha.1(@alessiofrittoli/abort-controller@0.1.0)(@alessiofrittoli/exception@3.5.0)(@alessiofrittoli/package-configs@1.6.0(eslint@9.39.5(supports-color@8.1.1))(oxlint@1.86.0)(prettier-plugin-sort-imports@1.8.11(typescript@6.0.3))(prettier@3.9.9)(tsdown@0.23.0(typescript@6.0.3))(typescript-eslint@8.71.0(eslint@9.39.5(supports-color@8.1.1))(supports-color@8.1.1)(typescript@6.0.3))(typescript@6.0.3)(vite@8.3.2(@types/node@24.19.1)(esbuild@0.27.1))(vitest@5.0.3))(@alessiofrittoli/web-utils@2.3.0)
       '@alessiofrittoli/package-configs':
-        specifier: ^1.5.0
-        version: 1.5.0(eslint@9.39.5(supports-color@8.1.1))(oxlint@1.86.0)(prettier-plugin-sort-imports@1.8.11(typescript@6.0.3))(prettier@3.9.9)(tsdown@0.23.0(typescript@6.0.3))(typescript-eslint@8.71.0(eslint@9.39.5(supports-color@8.1.1))(supports-color@8.1.1)(typescript@6.0.3))(typescript@6.0.3)(vite@8.3.2(@types/node@24.19.1)(esbuild@0.27.1))(vitest@5.0.3)
+        specifier: 1.6.0
+        version: 1.6.0(eslint@9.39.5(supports-color@8.1.1))(oxlint@1.86.0)(prettier-plugin-sort-imports@1.8.11(typescript@6.0.3))(prettier@3.9.9)(tsdown@0.23.0(typescript@6.0.3))(typescript-eslint@8.71.0(eslint@9.39.5(supports-color@8.1.1))(supports-color@8.1.1)(typescript@6.0.3))(typescript@6.0.3)(vite@8.3.2(@types/node@24.19.1)(esbuild@0.27.1))(vitest@5.0.3)
       '@types/node':
         specifier: ^24.19.1
         version: 24.19.1
@@ -89,8 +89,8 @@ packages:
       '@alessiofrittoli/package-configs': ^1.5.0
       '@alessiofrittoli/web-utils': ^2.3.0
 
-  '@alessiofrittoli/package-configs@1.5.0':
-    resolution: {integrity: sha512-+ptwCnx5EeF/wtg3iXeJLHl1JPv9mHX9BJUatOwVcSzqobYXWBVdjNSIYGoyGw2FU3GOjdNvb/zi2tYh20hNjw==}
+  '@alessiofrittoli/package-configs@1.6.0':
+    resolution: {integrity: sha512-zHmE0m8bq4f8n71yZnsVoKqzr2WNQZ7NZq+NCUdSkuUHISPSok6b6y4uka8Rf0saels4H3evRFQw4F/7rILsKg==}
     engines: {node: '>=24.15.0', pnpm: '>=11.27.1'}
     peerDependencies:
       '@eslint/js': ^10.0.1
@@ -1856,14 +1856,14 @@ snapshots:
       '@alessiofrittoli/exception': 3.5.0
       '@alessiofrittoli/web-utils': 2.3.0
 
-  '@alessiofrittoli/node-scripts@4.0.0-alpha.1(@alessiofrittoli/abort-controller@0.1.0)(@alessiofrittoli/exception@3.5.0)(@alessiofrittoli/package-configs@1.5.0(eslint@9.39.5(supports-color@8.1.1))(oxlint@1.86.0)(prettier-plugin-sort-imports@1.8.11(typescript@6.0.3))(prettier@3.9.9)(tsdown@0.23.0(typescript@6.0.3))(typescript-eslint@8.71.0(eslint@9.39.5(supports-color@8.1.1))(supports-color@8.1.1)(typescript@6.0.3))(typescript@6.0.3)(vite@8.3.2(@types/node@24.19.1)(esbuild@0.27.1))(vitest@5.0.3))(@alessiofrittoli/web-utils@2.3.0)':
+  '@alessiofrittoli/node-scripts@4.0.0-alpha.1(@alessiofrittoli/abort-controller@0.1.0)(@alessiofrittoli/exception@3.5.0)(@alessiofrittoli/package-configs@1.6.0(eslint@9.39.5(supports-color@8.1.1))(oxlint@1.86.0)(prettier-plugin-sort-imports@1.8.11(typescript@6.0.3))(prettier@3.9.9)(tsdown@0.23.0(typescript@6.0.3))(typescript-eslint@8.71.0(eslint@9.39.5(supports-color@8.1.1))(supports-color@8.1.1)(typescript@6.0.3))(typescript@6.0.3)(vite@8.3.2(@types/node@24.19.1)(esbuild@0.27.1))(vitest@5.0.3))(@alessiofrittoli/web-utils@2.3.0)':
     dependencies:
       '@alessiofrittoli/abort-controller': 0.1.0
       '@alessiofrittoli/exception': 3.5.0
-      '@alessiofrittoli/package-configs': 1.5.0(eslint@9.39.5(supports-color@8.1.1))(oxlint@1.86.0)(prettier-plugin-sort-imports@1.8.11(typescript@6.0.3))(prettier@3.9.9)(tsdown@0.23.0(typescript@6.0.3))(typescript-eslint@8.71.0(eslint@9.39.5(supports-color@8.1.1))(supports-color@8.1.1)(typescript@6.0.3))(typescript@6.0.3)(vite@8.3.2(@types/node@24.19.1)(esbuild@0.27.1))(vitest@5.0.3)
+      '@alessiofrittoli/package-configs': 1.6.0(eslint@9.39.5(supports-color@8.1.1))(oxlint@1.86.0)(prettier-plugin-sort-imports@1.8.11(typescript@6.0.3))(prettier@3.9.9)(tsdown@0.23.0(typescript@6.0.3))(typescript-eslint@8.71.0(eslint@9.39.5(supports-color@8.1.1))(supports-color@8.1.1)(typescript@6.0.3))(typescript@6.0.3)(vite@8.3.2(@types/node@24.19.1)(esbuild@0.27.1))(vitest@5.0.3)
       '@alessiofrittoli/web-utils': 2.3.0
 
-  '@alessiofrittoli/package-configs@1.5.0(eslint@9.39.5(supports-color@8.1.1))(oxlint@1.86.0)(prettier-plugin-sort-imports@1.8.11(typescript@6.0.3))(prettier@3.9.9)(tsdown@0.23.0(typescript@6.0.3))(typescript-eslint@8.71.0(eslint@9.39.5(supports-color@8.1.1))(supports-color@8.1.1)(typescript@6.0.3))(typescript@6.0.3)(vite@8.3.2(@types/node@24.19.1)(esbuild@0.27.1))(vitest@5.0.3)':
+  '@alessiofrittoli/package-configs@1.6.0(eslint@9.39.5(supports-color@8.1.1))(oxlint@1.86.0)(prettier-plugin-sort-imports@1.8.11(typescript@6.0.3))(prettier@3.9.9)(tsdown@0.23.0(typescript@6.0.3))(typescript-eslint@8.71.0(eslint@9.39.5(supports-color@8.1.1))(supports-color@8.1.1)(typescript@6.0.3))(typescript@6.0.3)(vite@8.3.2(@types/node@24.19.1)(esbuild@0.27.1))(vitest@5.0.3)':
     dependencies:
       typescript: 6.0.3
     optionalDependencies:
