@@ -9,8 +9,8 @@ This documentation describes the <code>Exception</code> class, which provides a 
   <a href="https://npmjs.org/package/@alessiofrittoli/exception">
     <img src="https://img.shields.io/npm/v/@alessiofrittoli/exception" alt="Latest version"/>
   </a>
-  <a href="https://coveralls.io/github/alessiofrittoli/node-scripts">
-    <img src="https://coveralls.io/repos/github/alessiofrittoli/node-scripts/badge.svg" alt="Test coverage"/>
+  <a href="https://coveralls.io/github/alessiofrittoli/exception">
+    <img src="https://coveralls.io/repos/github/alessiofrittoli/exception/badge.svg" alt="Test coverage"/>
   </a>
   <a href="https://socket.dev/npm/package/@alessiofrittoli/exception/overview">
     <img src="https://socket.dev/api/badge/npm/package/@alessiofrittoli/exception" alt="Socket Security score"/>
@@ -21,7 +21,7 @@ This documentation describes the <code>Exception</code> class, which provides a 
   <a href="https://bundlephobia.com/package/@alessiofrittoli/exception">
     <img src="https://badgen.net/bundlephobia/dependency-count/@alessiofrittoli/exception" alt="Dependencies"/>
   </a>
-  <a href="https://libraries.io/npm/%40alessiofrittoli%2Fnode-scripts">
+  <a href="https://libraries.io/npm/%40alessiofrittoli%2Fexception">
     <img src="https://img.shields.io/librariesio/release/npm/@alessiofrittoli/exception" alt="Dependencies status"/>
   </a>
 </p>
