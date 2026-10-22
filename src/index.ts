@@ -147,7 +147,8 @@ export class Exception<T = ErrorCode> extends Error {
 	): error is Exception<T> {
 		return (
 			error instanceof Exception ||
-			(typeof error === 'object' &&
+			(!!error &&
+				typeof error === 'object' &&
 				'__typename' in error &&
 				error.__typename === ExceptionName.Exception)
 		)
