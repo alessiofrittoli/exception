@@ -176,6 +176,10 @@ describe('Exception', () => {
 
 			expect(Exception.isException(error)).toBe(true)
 		})
+
+		it('returns false if the given error is falsy', () => {
+			expect(Exception.isException(null)).toBe(false)
+		})
 	})
 
 	describe('Exception.isAbortError()', () => {

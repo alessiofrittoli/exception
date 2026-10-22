@@ -18,11 +18,12 @@ export type AbortErrorOptions<T = ErrorCode> = Partial<Omit<ExceptionOptions<T>,
  */
 export class AbortError<T = ErrorCode> extends Exception<T> implements AbortErrorOptions<T> {
 	public constructor(options: AbortErrorOptions<T> = {}) {
-		const { code = ErrorCode.ABORT as T, ...rest } = options
+		const { code = ErrorCode.ABORT as T, message = 'signal is aborted without reason', ...rest } = options
 
 		super({
 			...rest,
 			name: ExceptionName.AbortError,
+			message,
 			code,
 		})
 	}
