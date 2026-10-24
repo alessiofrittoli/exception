@@ -3,6 +3,10 @@ import { ErrorCode } from '@/code'
 
 export * from '@/error-names'
 
+export interface JSONException<T = ErrorCode> extends Omit<Exception<T>, 'toJSON'> {
+	__typename: Exception['__typename']
+}
+
 /**
  * Interface representing the options for an Exception.
  *
@@ -177,10 +181,16 @@ export class Exception<T = ErrorCode> extends Error {
 	 *
 	 * @returns A JSON representation of the instance, including the message property.
 	 */
-	public toJSON(): this {
+	public toJSON(): JSONException<T> {
 		return {
-			...this,
+			name: this.name,
+			__typename: this.__typename,
 			message: this.message,
+			code: this.code,
+			title: this.title,
+			description: this.description,
+			isCritical: this.isCritical,
+			status: this.status,
 			cause: this.cause,
 		}
 	}

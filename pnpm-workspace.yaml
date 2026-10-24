@@ -1,8 +1,4 @@
 allowBuilds:
-  '@alessiofrittoli/fetcher': false
-  '@alessiofrittoli/type-utils': false
-  '@parcel/watcher': true
   esbuild: true
-  unrs-resolver: true
 minimumReleaseAgeExclude:
   - '@alessiofrittoli/*'
