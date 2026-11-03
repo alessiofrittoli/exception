@@ -1,10 +1,17 @@
+import type { Omit } from '@alessiofrittoli/type-utils'
 import { ExceptionName } from '@/error-names'
 import { ErrorCode } from '@/code'
 
 export * from '@/error-names'
 
+/**
+ * The `Exception` severity.
+ *
+ */
+export type Severity = typeof Exception.RECOVERABLE | typeof Exception.SEVERE | typeof Exception.CRITICAL
+
 export interface JSONException<T = ErrorCode> extends Omit<Exception<T>, 'toJSON'> {
-	__typename: Exception['__typename']
+	Symbol: typeof ExceptionName.Exception
 }
 
 /**
@@ -51,6 +58,11 @@ export interface ExceptionOptions<T = ErrorCode> extends ErrorOptions {
 	 */
 	isCritical?: boolean
 	/**
+	 * Indicates the error severity.
+	 *
+	 */
+	severity?: Severity
+	/**
 	 * The HTTP status code associated with the Exception.
 	 *
 	 */
@@ -68,15 +80,14 @@ export interface ExceptionOptions<T = ErrorCode> extends ErrorOptions {
  * @template T The type of the code property of the Exception. Defaults to `ErrorCode`.
  *
  * @extends Error
- * @implements ExceptionOptions<T>
  */
 export class Exception<T = ErrorCode> extends Error {
-	private readonly __typename = ExceptionName.Exception
+	public static readonly Symbol = Symbol.for(ExceptionName.Exception)
 	/**
 	 * The error interface name.
 	 *
 	 */
-	public override readonly name: string = this.__typename
+	public override readonly name: string = ExceptionName.Exception
 	/**
 	 * The error message containing technical informations about the error.
 	 *
@@ -99,11 +110,6 @@ export class Exception<T = ErrorCode> extends Error {
 	 */
 	public readonly code
 	/**
-	 * Indicates whether the error is a critical error.
-	 *
-	 */
-	public readonly isCritical
-	/**
 	 * The HTTP status code associated with the Exception.
 	 *
 	 */
@@ -113,6 +119,32 @@ export class Exception<T = ErrorCode> extends Error {
 	 *
 	 */
 	public override readonly cause: unknown
+	/**
+	 * The error severity.
+	 *
+	 */
+	public readonly severity?: Severity
+	/**
+	 * Indicates whether the `Exception.severity` is critical.
+	 *
+	 */
+	public readonly isCritical
+
+	/**
+	 * A non-critical error that could be resolved by retrying the algorithm maybe with different parameters.
+	 *
+	 */
+	public static readonly RECOVERABLE = 1
+	/**
+	 * An error that interrupted some algorithms but the overall system still works.
+	 *
+	 */
+	public static readonly SEVERE = 2
+	/**
+	 * An error that interrupts the algorithm.
+	 *
+	 */
+	public static readonly CRITICAL = 3
 
 	/**
 	 * Constructs a new Exception instance.
@@ -128,13 +160,16 @@ export class Exception<T = ErrorCode> extends Error {
 			this.name = options.name
 		}
 
+		const { isCritical, severity = isCritical ? Exception.CRITICAL : undefined } = options
+
 		this.message = message
 		this.title = options.title
 		this.description = options.description
 		this.code = options.code
-		this.isCritical = options.isCritical ?? false
+		this.severity = severity
+		this.isCritical = isCritical ?? this.severity === Exception.CRITICAL
 		this.status = options.status
-		this.cause = Exception.isException(options.cause) ? new Exception(options.cause) : options.cause
+		this.cause = Exception.normalizeCause(options.cause)
 	}
 
 	/**
@@ -145,16 +180,22 @@ export class Exception<T = ErrorCode> extends Error {
 	 * @param error The error to check.
 	 * @returns `true` if the error is an instance of Exception or has a `__typename` property equal to 'Exception', `false` otherwise.
 	 */
-	public static isException<T = ErrorCode>(
-		// oxlint-disable-next-line typescript/no-explicit-any
-		error: any,
-	): error is Exception<T> {
+	public static isException<T = ErrorCode>(error: unknown): error is Exception<T> | JSONException<T> {
+		if (!error || typeof error !== 'object') {
+			return false
+		}
+
+		if (error instanceof Exception) {
+			return true
+		}
+
+		if (!('Symbol' in error)) {
+			return false
+		}
+
 		return (
-			error instanceof Exception ||
-			(!!error &&
-				typeof error === 'object' &&
-				'__typename' in error &&
-				error.__typename === ExceptionName.Exception)
+			error.Symbol === Exception.Symbol ||
+			(typeof error.Symbol === 'string' && Symbol.for(error.Symbol) === Exception.Symbol)
 		)
 	}
 
@@ -183,15 +224,30 @@ export class Exception<T = ErrorCode> extends Error {
 	 */
 	public toJSON(): JSONException<T> {
 		return {
+			Symbol: ExceptionName.Exception,
 			name: this.name,
-			__typename: this.__typename,
 			message: this.message,
 			code: this.code,
 			title: this.title,
 			description: this.description,
 			isCritical: this.isCritical,
+			severity: this.severity,
 			status: this.status,
 			cause: this.cause,
 		}
+	}
+
+	/**
+	 * Attempts to normalize the given `cause` to a possible `Exception` instance.
+	 *
+	 * @param cause The error cause.
+	 * @returns The cause as `Exception` instance if applicable, the given cause as is (`unknown`) otherwise.
+	 */
+	private static normalizeCause(cause: unknown): unknown {
+		if (!Exception.isException(cause) || cause instanceof Exception) {
+			return cause
+		}
+
+		return new Exception(cause)
 	}
 }
