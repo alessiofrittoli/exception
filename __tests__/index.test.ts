@@ -1,6 +1,6 @@
+import { Exception, type JSONException } from '@/index'
 import { ExceptionName } from '@/error-names'
 import { describe, expect, it } from 'vitest'
-import { Exception } from '@/index'
 import { ErrorCode } from '@/code'
 
 describe('Exception', () => {
@@ -35,6 +35,7 @@ describe('Exception', () => {
 			cause: 'Cause',
 			code: 0,
 			isCritical: true,
+			// severity: Exception.CRITICAL,
 			status: 500,
 		})
 
@@ -47,6 +48,7 @@ describe('Exception', () => {
 		expect(error2.cause).toBe(error1.cause)
 		expect(error2.code).toBe(error1.code)
 		expect(error2.isCritical).toBe(error1.isCritical)
+		expect(error2.severity).toBe(error1.severity)
 		expect(error2.status).toBe(error1.status)
 	})
 
@@ -59,10 +61,11 @@ describe('Exception', () => {
 			cause: 'Cause',
 			code: 0,
 			isCritical: true,
+			// severity: Exception.SEVERE,
 			status: 500,
 		})
 
-		const error2 = new Exception(JSON.parse(JSON.stringify(error1)))
+		const error2 = new Exception(JSON.parse<typeof error1>(JSON.stringify(error1)))
 
 		expect(error2.name).toBe(error1.name)
 		expect(error2.message).toBe(error1.message)
@@ -71,6 +74,7 @@ describe('Exception', () => {
 		expect(error2.cause).toBe(error1.cause)
 		expect(error2.code).toBe(error1.code)
 		expect(error2.isCritical).toBe(error1.isCritical)
+		// expect(error2.severity).toBe(error1.severity)
 		expect(error2.status).toBe(error1.status)
 	})
 
@@ -121,7 +125,7 @@ describe('Exception', () => {
 			cause: JSON.parse(JSON.stringify(cause3)),
 		})
 
-		const parsedError = new Exception(JSON.parse(JSON.stringify(error)))
+		const parsedError = new Exception(JSON.parse<typeof error>(JSON.stringify(error)))
 
 		expect(parsedError.code).toBe(3)
 		expect(parsedError.cause).toBeInstanceOf(Exception)
@@ -139,6 +143,46 @@ describe('Exception', () => {
 				}
 			}
 		}
+	})
+
+	it('supports different severities', () => {
+		const error = new Exception({
+			code: 0,
+			severity: Exception.CRITICAL,
+		})
+
+		expect(error.severity).toBe(Exception.CRITICAL)
+		expect(error.isCritical).toBe(true)
+
+		//
+
+		const error2 = new Exception({
+			code: 0,
+			isCritical: true,
+		})
+
+		expect(error2.severity).toBe(Exception.CRITICAL)
+		expect(error2.isCritical).toBe(true)
+
+		//
+
+		const error3 = new Exception({
+			code: 0,
+			severity: Exception.RECOVERABLE,
+		})
+
+		expect(error3.severity).toBe(Exception.RECOVERABLE)
+		expect(error3.isCritical).toBe(false)
+
+		//
+
+		const error4 = new Exception({
+			code: 0,
+			severity: Exception.SEVERE,
+		})
+
+		expect(error4.severity).toBe(Exception.SEVERE)
+		expect(error4.isCritical).toBe(false)
 	})
 
 	describe('Exception.isException()', () => {
@@ -245,13 +289,13 @@ describe('Exception', () => {
 				cause: 'User aborted the request.',
 			})
 
-			const parsedException = JSON.parse(JSON.stringify(exception)) as Exception
+			const parsedException = JSON.parse<JSONException>(JSON.stringify(exception))
 
 			expect(Exception.isException(parsedException)).toBe(true)
 			expect(parsedException.message).toBe(exception.message)
 			expect(parsedException.code).toBe(exception.code)
 			expect(parsedException.name).toBe(exception.name)
-			expect(parsedException['__typename']).toBe(exception['__typename'])
+			expect(parsedException['Symbol']).toBe(Symbol.keyFor(Exception.Symbol))
 			expect(parsedException.cause).toBe(exception.cause)
 		})
 	})
