@@ -1,4 +1,4 @@
-import type { Omit } from '@alessiofrittoli/type-utils'
+import type { Omit, ReadOnly } from '@alessiofrittoli/type-utils'
 import { ExceptionName } from '@/error-names'
 import { ErrorCode } from '@/code'
 
@@ -10,8 +10,8 @@ export * from '@/error-names'
  */
 export type Severity = typeof Exception.RECOVERABLE | typeof Exception.SEVERE | typeof Exception.CRITICAL
 
-export interface JSONException<T = ErrorCode> extends Omit<Exception<T>, 'toJSON'> {
-	Symbol: typeof ExceptionName.Exception
+export interface JSONException<T = ErrorCode> extends ReadOnly<Omit<Exception<T>, 'toJSON'>> {
+	readonly Symbol: typeof ExceptionName.Exception
 }
 
 /**
@@ -173,12 +173,13 @@ export class Exception<T = ErrorCode> extends Error {
 	}
 
 	/**
-	 * Determines if the provided error is an instance of the Exception class.
+	 * Determines if the provided error is an Exception instance or a JSON representation of the Exception.
 	 *
 	 * @template T The type of the code property of the Exception.
 	 *
 	 * @param error The error to check.
-	 * @returns `true` if the error is an instance of Exception or has a `__typename` property equal to 'Exception', `false` otherwise.
+	 *
+	 * @returns `true` if the error is an instance of Exception or a JSON representation of the Exception, `false` otherwise.
 	 */
 	public static isException<T = ErrorCode>(error: unknown): error is Exception<T> | JSONException<T> {
 		if (!error || typeof error !== 'object') {
